@@ -1,0 +1,44 @@
+#PlaceHolders:
+# %gamemode%: Shows the current gamemode
+# %obtained_wools%: Displays youre currents wools
+# %time_Played%: Displays the time played
+# %total_deaths%: Displays the deaths of all teams
+# %Current_Time%: Displays the current time of the TimeZone you chose in the timeZone slot of the config.yml
+
+#TimeZones:
+# You can use the timezone you want from this list:
+# https://garygregory.wordpress.com/2013/06/18/what-are-the-java-timezone-ids/
+
+scoreboard:
+  timeZone: "America/Argentina/Buenos_Aires"
+  title: "&6&lCTM Vanilla"
+  PlayingBoard: # Scoreboard that shown where you are playing
+    - "  %gamemode%  "
+    - " "
+    - "  &bObtained wools  "
+    - "  %obtained_wools% / 16  "
+    - " "
+    - "  &cTime  "
+    - "  %time_Played%  "
+    - " "
+    - "  &dDeaths&f: %total_deaths%  "
+    - " "
+  WaitingBoard: # Scoreboard that shown when you are waiting
+    - " "
+    - "  &cWaiting...  "
+    - " "
+    - " "
+    - "  &bArgentina Time  "
+    - "  %Current_Time%  "
+    - " "
+  LoseBoard: # Scoreboard that shown when you lose the game
+    - " "
+    - "  &cYou Lose  "
+    - "  &cYou exceeded the time limit  "
+    - " "
+
+GameConfig:
+  MaxGameTimeHardMode: "02:00:00" #Max game time for HardMode gamemode
+  MaxGameTimeNormalMode: "03:00:00" #Max game time for NormalMode gamemode
+  #HH:MM:SS, please the MaxGameTime put it like in the default config
+  #if you want 1 hour and 30 minutes of MaxGameTime you have to put "01:30:00"

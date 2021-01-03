@@ -1,0 +1,17 @@
+name: CTMVanilla
+version: 1.0
+main: me.vicen621.ctmvanilla.Main
+api-version: 1.16
+authors: [ Vicen621 ]
+description: CTMVanilla plugin
+
+commands:
+  guide:
+  start:
+  uhc:
+  ctmvanilla:
+  minerals:
+
+permissions:
+  ctm.op:
+    default: op
