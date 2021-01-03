@@ -51,6 +51,7 @@ public class Scoreboard {
             }
         }else if (Main.lose){
             List<String> lines = Main.config.getConfig().getStringList("scoreboard.LoseBoard");
+            board.updateLines("");
 
             for (int i = 0; i < lines.toArray().length; i++) {
                 String currentLine = lines.get(i);
