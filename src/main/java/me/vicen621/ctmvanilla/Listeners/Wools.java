@@ -1,6 +1,6 @@
 package me.vicen621.ctmvanilla.Listeners;
 
-import me.vicen621.ctmvanilla.FastBoard.FastBoard;
+import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
 import me.vicen621.ctmvanilla.Main;
 import me.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.*;
@@ -22,31 +22,31 @@ import org.bukkit.scoreboard.ScoreboardManager;
 public class Wools implements Listener {
     private Main plugin;
 
-    private static Boolean whiteWool = Boolean.FALSE;
-    private static Boolean orangeWool = Boolean.FALSE;
-    private static Boolean magentaWool = Boolean.FALSE;
-    private static Boolean lightBlueWool = Boolean.FALSE;
-    private static Boolean yellowWool = Boolean.FALSE;
-    private static Boolean limeWool = Boolean.FALSE;
-    private static Boolean pinkWool = Boolean.FALSE;
-    private static Boolean grayWool = Boolean.FALSE;
-    private static Boolean lightGrayWool = Boolean.FALSE;
-    private static Boolean cyanWool = Boolean.FALSE;
-    private static Boolean purpleWool = Boolean.FALSE;
-    private static Boolean blueWool = Boolean.FALSE;
-    private static Boolean brownWool = Boolean.FALSE;
-    private static Boolean greenWool = Boolean.FALSE;
-    private static Boolean redWool = Boolean.FALSE;
-    private static Boolean blackWool = Boolean.FALSE;
+    public static Boolean whiteWool = Boolean.FALSE;
+    public static Boolean orangeWool = Boolean.FALSE;
+    public static Boolean magentaWool = Boolean.FALSE;
+    public static Boolean lightBlueWool = Boolean.FALSE;
+    public static Boolean yellowWool = Boolean.FALSE;
+    public static Boolean limeWool = Boolean.FALSE;
+    public static Boolean pinkWool = Boolean.FALSE;
+    public static Boolean grayWool = Boolean.FALSE;
+    public static Boolean lightGrayWool = Boolean.FALSE;
+    public static Boolean cyanWool = Boolean.FALSE;
+    public static Boolean purpleWool = Boolean.FALSE;
+    public static Boolean blueWool = Boolean.FALSE;
+    public static Boolean brownWool = Boolean.FALSE;
+    public static Boolean greenWool = Boolean.FALSE;
+    public static Boolean redWool = Boolean.FALSE;
+    public static Boolean blackWool = Boolean.FALSE;
 
 
-    private static Boolean Coal = Boolean.FALSE;
-    private static Boolean Iron = Boolean.FALSE;
-    private static Boolean Gold = Boolean.FALSE;
-    private static Boolean Lapis = Boolean.FALSE;
-    private static Boolean Redstone = Boolean.FALSE;
-    private static Boolean Emerald = Boolean.FALSE;
-    private static Boolean Diamond = Boolean.FALSE;
+    public static Boolean Coal = Boolean.FALSE;
+    public static Boolean Iron = Boolean.FALSE;
+    public static Boolean Gold = Boolean.FALSE;
+    public static Boolean Lapis = Boolean.FALSE;
+    public static Boolean Redstone = Boolean.FALSE;
+    public static Boolean Emerald = Boolean.FALSE;
+    public static Boolean Diamond = Boolean.FALSE;
 
     public Wools(Main plugin){
         this.plugin = plugin;
@@ -62,8 +62,9 @@ public class Wools implements Listener {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("hp", "health");
+        Objective objective1 = scoreboard.registerNewObjective("hp1", "health");
         objective.setDisplayName(ChatColor.RED + "❤");
-        objective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        objective1.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         p.setScoreboard(scoreboard);
 

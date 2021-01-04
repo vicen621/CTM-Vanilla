@@ -1,4 +1,4 @@
-package me.vicen621.ctmvanilla.FastBoard;
+package me.vicen621.ctmvanilla.Scoreboard;
 
 import org.bukkit.Bukkit;
 

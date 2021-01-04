@@ -13,7 +13,7 @@ scoreboard:
   timeZone: "America/Argentina/Buenos_Aires"
   title: "&6&lCTM Vanilla"
   PlayingBoard: # Scoreboard that shown where you are playing
-    - "  %gamemode%  "
+    - "  &a%gamemode%  "
     - " "
     - "  &bObtained wools  "
     - "  %obtained_wools% / 16  "
@@ -35,6 +35,11 @@ scoreboard:
     - " "
     - "  &cYou Lose  "
     - "  &cYou exceeded the time limit  "
+    - " "
+  WonBoard: #Scorebard that shown when toy won the game
+    - " "
+    - "  &aYOU WON!  "
+    - "  &bYou completed the monument  "
     - " "
 
 GameConfig:

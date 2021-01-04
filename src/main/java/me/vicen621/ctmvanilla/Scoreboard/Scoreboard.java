@@ -1,20 +1,17 @@
 package me.vicen621.ctmvanilla.Scoreboard;
 
-import com.google.common.base.Strings;
 import me.vicen621.ctmvanilla.Commands.Start;
-import me.vicen621.ctmvanilla.FastBoard.FastBoard;
 import me.vicen621.ctmvanilla.Listeners.Wools;
 import me.vicen621.ctmvanilla.Main;
 import me.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scoreboard {
     public static void update(FastBoard board){
-        if (!Main.started && !Main.lose){
+        if (!Main.started && !Main.lose && !Main.won){
             List<String> lines = Main.config.getConfig().getStringList("scoreboard.WaitingBoard");
 
             for (int i = 0; i < lines.toArray().length; i++) {
@@ -31,10 +28,10 @@ public class Scoreboard {
                 String currentLine = lines.get(i);
                 if (currentLine.contains("%gamemode%")){
                     if (Main.HardMode){
-                        currentLine = currentLine.replace("%gamemode%", "&aHardMode");
+                        currentLine = currentLine.replace("%gamemode%", "HardMode");
                     }
                     if (Main.NormalMode){
-                        currentLine = currentLine.replace("%gamemode%", "&aNormal");
+                        currentLine = currentLine.replace("%gamemode%", "Normal");
                     }
                 }
                 if (currentLine.contains("%obtained_wools%")){
@@ -51,6 +48,15 @@ public class Scoreboard {
             }
         }else if (Main.lose){
             List<String> lines = Main.config.getConfig().getStringList("scoreboard.LoseBoard");
+            board.updateLines("");
+
+            for (int i = 0; i < lines.toArray().length; i++) {
+                String currentLine = lines.get(i);
+
+                board.updateLine(i, Utils.chat(currentLine));
+            }
+        }else if (Main.won){
+            List<String> lines = Main.config.getConfig().getStringList("scoreboard.WonBoard");
             board.updateLines("");
 
             for (int i = 0; i < lines.toArray().length; i++) {
