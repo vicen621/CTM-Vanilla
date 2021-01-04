@@ -71,6 +71,7 @@ public class ItemsFaltantes implements CommandExecutor {
                     }
                     if (!Main.Minerals) {
                         sender.sendMessage(Utils.chat("&5---------------------------------------"));
+                        return true;
                     }
                 }
                 if (Main.HardMode) {
@@ -124,6 +125,7 @@ public class ItemsFaltantes implements CommandExecutor {
                     }
                     if (!Main.Minerals) {
                         sender.sendMessage(Utils.chat("&5---------------------------------------"));
+                        return true;
                     }
                 }
                 if (Main.Minerals) {
@@ -149,9 +151,11 @@ public class ItemsFaltantes implements CommandExecutor {
                         sender.sendMessage(Utils.chat("&5- &bDiamond Block"));
                     }
                     sender.sendMessage(Utils.chat("&5---------------------------------------"));
+                    return true;
                 }
             }
             sender.sendMessage(Utils.chat("&cNo game running, please start the game to see the missing items"));
+            return true;
         }
         return false;
     }

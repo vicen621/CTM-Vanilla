@@ -35,7 +35,7 @@ public class Start implements CommandExecutor {
                 return true;
             }
             if (args.length == 0){
-                sender.sendMessage(Utils.chat("&cPlease specify: normal | hardmode | nightmaremode"));
+                sender.sendMessage(Utils.chat("&cPlease specify: normal | hardmode"));
                 return true;
             }if (args.length == 1 && args[0].equalsIgnoreCase("normal")){
                 if (Main.started){
