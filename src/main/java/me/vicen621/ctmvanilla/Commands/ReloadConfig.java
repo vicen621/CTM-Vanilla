@@ -8,23 +8,23 @@ import org.bukkit.command.CommandSender;
 
 public class ReloadConfig implements CommandExecutor {
 
-    private Main plugin;
+    private final Main plugin;
 
-    public ReloadConfig(Main plugin){
+    public ReloadConfig(Main plugin) {
         this.plugin = plugin;
         plugin.getCommand("ctmvanilla").setExecutor(this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("ctmvanilla")){
-            if (args.length == 0){
+        if (cmd.getName().equalsIgnoreCase("ctmvanilla")) {
+            if (args.length == 0) {
                 sender.sendMessage(Utils.chat("&c/ctmvanilla reload"));
                 return true;
             }
-            if (args.length == 1 && args[0].equalsIgnoreCase("reload")){
+            if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
                 Main.config.reloadConfig();
-                sender.sendMessage(Utils.chat("&aReload Complete"));
+                sender.sendMessage(Utils.chat(Main.Prefix + "&aReload Complete"));
             }
         }
         return false;

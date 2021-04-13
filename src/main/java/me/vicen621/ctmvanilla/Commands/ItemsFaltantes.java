@@ -8,9 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class ItemsFaltantes implements CommandExecutor {
-    private Main plugin;
+    private final Main plugin;
 
-    public ItemsFaltantes(Main plugin){
+    public ItemsFaltantes(Main plugin) {
         this.plugin = plugin;
         plugin.getCommand("wools").setExecutor(this);
     }

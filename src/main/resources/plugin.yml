@@ -8,26 +8,24 @@ description: CTMVanilla plugin
 commands:
   guide:
     description: gives the guide to the player
-    usage: §c/guide normal | hardmode
   start:
     description: start the game
-    usage: §c/start normal | hardmode
     permission: ctm.op
   uhc:
     description: toggles the uhc game mode
-    usage: §c/uhc
     permission: ctm.op
   ctmvanilla:
     description: reload command
-    usage: §c/ctmvanilla reload
     permission: ctm.op
   minerals:
     description: toggles the minerals game mode
-    usage: §c/minerals
     permission: ctm.op
   wools:
     description: see the missing items
     usage: §c/wools
+  timer:
+    description: resumes, stops and set the timer
+    permission: crm.op
 
 permissions:
   ctm.op:

@@ -11,46 +11,50 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 public class ConfigFile {
-    private Main plugin;
+    private final Main plugin;
     private FileConfiguration fileConfig = null;
     private File configFile = null;
 
-    public ConfigFile(Main plugin){
+    public ConfigFile(Main plugin) {
         this.plugin = plugin;
         saveDefaultConfig();
     }
+
     public void reloadConfig() {
-        if (this.configFile == null){
+        if (this.configFile == null) {
             this.configFile = new File(this.plugin.getDataFolder(), "config.yml");
         }
         this.fileConfig = YamlConfiguration.loadConfiguration(this.configFile);
         InputStream defaultStream = this.plugin.getResource("config.yml");
-        if (defaultStream != null){
+        if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             this.fileConfig.setDefaults(defaultConfig);
         }
     }
-    public FileConfiguration getConfig(){
-        if (this.fileConfig == null){
+
+    public FileConfiguration getConfig() {
+        if (this.fileConfig == null) {
             reloadConfig();
         }
         return this.fileConfig;
     }
-    public void saveConfig(){
-        if (this.fileConfig == null || this.configFile == null){
+
+    public void saveConfig() {
+        if (this.fileConfig == null || this.configFile == null) {
             return;
         }
         try {
             this.getConfig().save(this.configFile);
-        } catch (IOException e){
+        } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "Could not save config to " + this.configFile, e);
         }
     }
-    public void saveDefaultConfig(){
-        if (this.configFile == null){
+
+    public void saveDefaultConfig() {
+        if (this.configFile == null) {
             this.configFile = new File(this.plugin.getDataFolder(), "config.yml");
         }
-        if (!this.configFile.exists()){
+        if (!this.configFile.exists()) {
             this.plugin.saveResource("config.yml", false);
         }
     }

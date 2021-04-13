@@ -16,42 +16,46 @@ import java.util.Objects;
 
 public class Start implements CommandExecutor {
 
-    private Main plugin;
+    private final Main plugin;
     public static String timer;
+    private boolean running = false;
 
-    public Start(Main plugin){
+    public Start(Main plugin) {
         this.plugin = plugin;
         plugin.getCommand("start").setExecutor(this);
         plugin.getCommand("uhc").setExecutor(this);
         plugin.getCommand("minerals").setExecutor(this);
+        plugin.getCommand("timer").setExecutor(this);
     }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("start")){
-            if (!sender.hasPermission("ctm.op")){
+        if (cmd.getName().equalsIgnoreCase("start")) {
+            if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
                 return true;
             }
-            if (args.length == 0){
+            if (args.length == 0) {
                 sender.sendMessage(Utils.chat("&cPlease specify: normal | hardmode"));
                 return true;
-            }if (args.length == 1 && args[0].equalsIgnoreCase("normal")){
-                if (Main.started){
+            }
+            if (args.length == 1 && args[0].equalsIgnoreCase("normal")) {
+                if (Main.started) {
                     sender.sendMessage(Utils.chat("&cYou only can do this command one time!"));
                     return true;
                 }
-                Bukkit.broadcastMessage(Utils.chat("&aNormalMode has been enabled"));
-                time();
-                for (Player p : Bukkit.getOnlinePlayers()){
-                    if (p.getGameMode() == GameMode.SURVIVAL){
-                        Main.Playing.add(p);
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aNormalMode has been enabled"));
+                time(0, 0, 0);
+                running = true;
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.getGameMode() == GameMode.SURVIVAL) {
+                        Main.Playing.add(p.getUniqueId());
                     }
                 }
                 Main.started = Boolean.TRUE;
                 Main.NormalMode = Boolean.TRUE;
-                if (Main.UHC){
+                if (Main.UHC) {
                     World world = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.over")));
                     World nether = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.nether")));
                     World end = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.end")));
@@ -60,21 +64,22 @@ public class Start implements CommandExecutor {
                     end.setGameRule(GameRule.NATURAL_REGENERATION, false);
                 }
                 return true;
-            }else if (args.length == 1 && args[0].equalsIgnoreCase("hardmode")){
-                if (Main.started){
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("hardmode") && sender.isOp()) {
+                if (Main.started) {
                     sender.sendMessage(Utils.chat("&cYou only can do this command one time!"));
                     return true;
                 }
-                Bukkit.broadcastMessage(Utils.chat("&aHardMode has been enabled"));
-                time();
-                for (Player p : Bukkit.getOnlinePlayers()){
-                    if (p.getGameMode() == GameMode.SURVIVAL){
-                        Main.Playing.add(p);
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aHardMode has been enabled"));
+                time(0, 0, 0);
+                running = true;
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.getGameMode() == GameMode.SURVIVAL) {
+                        Main.Playing.add(p.getUniqueId());
                     }
                 }
                 Main.started = Boolean.TRUE;
                 Main.HardMode = Boolean.TRUE;
-                if (Main.UHC){
+                if (Main.UHC) {
                     World world = Bukkit.getWorld("world");
                     World nether = Bukkit.getWorld("world_nether");
                     World end = Bukkit.getWorld("world_the_end");
@@ -84,84 +89,130 @@ public class Start implements CommandExecutor {
                 }
                 return true;
             }
-        }
-        else if (cmd.getName().equalsIgnoreCase("uhc")){
-            if (!sender.hasPermission("ctm.op")){
+        } else if (cmd.getName().equalsIgnoreCase("uhc")) {
+            if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
                 return true;
             }
-            if (Main.started){
+            if (Main.started) {
                 sender.sendMessage(Utils.chat("&cYou can't execute this command during game"));
                 return true;
             }
             if (!Main.UHC) {
-                Bukkit.broadcastMessage(Utils.chat("&aUHC Mode has been enabled"));
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aUHC Mode has been enabled"));
                 Main.UHC = Boolean.TRUE;
                 return true;
-            } else{
-                Bukkit.broadcastMessage(Utils.chat("&cUHC Mode has been disabled"));
+            } else {
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&cUHC Mode has been disabled"));
                 Main.UHC = Boolean.FALSE;
                 return true;
             }
-        }
-        else if (cmd.getName().equalsIgnoreCase("minerals")){
-            if (!sender.hasPermission("ctm.op")){
+        } else if (cmd.getName().equalsIgnoreCase("minerals")) {
+            if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
                 return true;
             }
-            if (Main.started){
+            if (Main.started) {
                 sender.sendMessage(Utils.chat("&cYou can't execute this command during game"));
                 return true;
             }
-            if (!Main.Minerals){
-                Bukkit.broadcastMessage(Utils.chat("&aMinerals Mode has been enabled"));
+            if (!Main.Minerals) {
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aMinerals Mode has been enabled"));
                 Main.Minerals = Boolean.TRUE;
                 return true;
-            } else{
-                Bukkit.broadcastMessage(Utils.chat("&cMinerals Mode has been disabled"));
+            } else {
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&cMinerals Mode has been disabled"));
                 Main.Minerals = Boolean.FALSE;
+                return true;
+            }
+        }else if (cmd.getName().equalsIgnoreCase("timer") && sender.isOp()){
+            if (args.length == 0){
+                sender.sendMessage(Utils.chat("&c/timer <set/stop/resume>"));
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("set")){
+                if (args.length != 4){
+                    sender.sendMessage(Utils.chat("&c/timer set <hours> <minutes> <seconds>"));
+                    return true;
+                }
+
+                if (Utils.isInt(args[1]) && Utils.isInt(args[2]) && Utils.isInt(args[3])){
+                    running = false;
+                    new BukkitRunnable(){
+
+                        @Override
+                        public void run() {
+                            time(Integer.parseInt(args[3]), Integer.parseInt(args[2]), Integer.parseInt(args[1]));
+                            running = true;
+                            Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer setted to &3" + args[1] + ":" + args[2] + ":" + args[3]));
+                        }
+                    }.runTaskLater(plugin, 21L);
+                }else{
+                    sender.sendMessage(Utils.chat("&c/timer set <secs> <mins> <hours>"));
+                    return true;
+                }
+            }else if (args[0].equalsIgnoreCase("stop")){
+                running = false;
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer stoped"));
+            }else if (args[0].equalsIgnoreCase("resume")){
+                String[] parts = timer.split(":");
+                int secs = Integer.parseInt(parts[2]);
+                int mins = Integer.parseInt(parts[1]);
+                int hors = Integer.parseInt(parts[0]);
+
+
+
+                time(secs, mins, hors);
+                running = true;
+                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer resumed from &3" + hors + ":" + mins + ":" + secs));
                 return true;
             }
         }
         return false;
     }
 
-    public void time(){
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            int min = 00;
-            int sec = 00;
-            int hor = 00;
+    public void time(int secs, int mins, int hors) {
+        new BukkitRunnable(){
+            int sec = secs;
+            int min = mins;
+            int hor = hors;
             String secc;
             String minn;
             String horr;
+
             @Override
             public void run() {
-                if (sec < 10){
-                    secc = "0" + sec;
-                } else if (sec > 9){
-                    secc = "" + sec;
-                }
-                if (min < 10){
-                    minn = "0" + min;
-                } else if (min > 9){
-                    minn = "" + min;
-                }
-                if (hor < 10){
-                    horr = "0" + hor;
-                } else if (sec > 9){
-                    horr = "" + hor;
-                }
-                timer = horr + ":" + minn + ":" + secc;
-                sec = sec + 1;
-                if (sec == 60){
-                    sec = 00;
-                    min = min + 1;
-                }
-                if (min == 60){
-                    min = 00;
-                    hor = hor + 1;
+                if (running) {
+                    if (sec < 10) {
+                        secc = "0" + sec;
+                    } else if (sec > 9) {
+                        secc = "" + sec;
+                    }
+                    if (min < 10) {
+                        minn = "0" + min;
+                    } else if (min > 9) {
+                        minn = "" + min;
+                    }
+                    if (hor < 10) {
+                        horr = "0" + hor;
+                    } else if (sec > 9) {
+                        horr = "" + hor;
+                    }
+                    timer = horr + ":" + minn + ":" + secc;
+                    sec = sec + 1;
+                    if (sec == 60) {
+                        sec = 0;
+                        min = min + 1;
+                    }
+                    if (min == 60) {
+                        min = 0;
+                        hor = hor + 1;
+                    }
+                }else{
+                    cancel();
                 }
             }
-        },0L, 20L);
+        }.runTaskTimer(plugin, 0L, 20L);
     }
 }

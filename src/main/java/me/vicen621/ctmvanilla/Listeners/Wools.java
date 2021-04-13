@@ -1,7 +1,7 @@
 package me.vicen621.ctmvanilla.Listeners;
 
-import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
 import me.vicen621.ctmvanilla.Main;
+import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
 import me.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
@@ -20,7 +20,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Wools implements Listener {
-    private Main plugin;
+    private final Main plugin;
 
     public static Boolean whiteWool = Boolean.FALSE;
     public static Boolean orangeWool = Boolean.FALSE;
@@ -48,33 +48,25 @@ public class Wools implements Listener {
     public static Boolean Emerald = Boolean.FALSE;
     public static Boolean Diamond = Boolean.FALSE;
 
-    public Wools(Main plugin){
+    public Wools(Main plugin) {
         this.plugin = plugin;
         this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
-     public void onJoin(PlayerJoinEvent e){
+    public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         FastBoard board = new FastBoard(p);
         board.updateTitle(Utils.chat(Main.config.getConfig().getString("scoreboard.title")));
         Main.boards.put(p.getName(), board);
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard scoreboard = manager.getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("hp", "health");
-        Objective objective1 = scoreboard.registerNewObjective("hp1", "health");
-        objective.setDisplayName(ChatColor.RED + "❤");
-        objective1.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-        objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
-        p.setScoreboard(scoreboard);
 
-        if (!Main.started){
+        if (!Main.started) {
             p.setStatistic(Statistic.DEATHS, 0);
         }
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent e){
+    public void onClick(InventoryClickEvent e) {
         ItemStack item = e.getCurrentItem();
         Player p = (Player) e.getWhoClicked();
         if (Main.started) {
@@ -199,7 +191,7 @@ public class Wools implements Listener {
                         online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                     }
                 }
-                if (item.getType() == Material.TIPPED_ARROW){
+                if (item.getType() == Material.TIPPED_ARROW) {
                     if (blackWool) return;
                     blackWool = Boolean.TRUE;
                     for (Player online : Bukkit.getOnlinePlayers()) {
@@ -207,7 +199,7 @@ public class Wools implements Listener {
                         online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                     }
                 }
-                if (Main.Minerals){
+                if (Main.Minerals) {
                     if (item.getType() == Material.COAL_BLOCK) {
                         if (Coal) return;
                         Coal = Boolean.TRUE;
@@ -256,7 +248,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (item.getType() == Material.DIAMOND_BLOCK){
+                    if (item.getType() == Material.DIAMOND_BLOCK) {
                         if (Diamond) return;
                         Diamond = Boolean.TRUE;
                         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -265,7 +257,7 @@ public class Wools implements Listener {
                         }
                     }
                 }
-            }else if (Main.HardMode){
+            } else if (Main.HardMode) {
                 if (item.getType() == Material.CAKE) {
                     if (whiteWool) return;
                     whiteWool = Boolean.TRUE;
@@ -386,7 +378,7 @@ public class Wools implements Listener {
                         online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                     }
                 }
-                if (item.getType() == Material.CYAN_SHULKER_BOX){
+                if (item.getType() == Material.CYAN_SHULKER_BOX) {
                     if (blackWool) return;
                     blackWool = Boolean.TRUE;
                     for (Player online : Bukkit.getOnlinePlayers()) {
@@ -394,7 +386,7 @@ public class Wools implements Listener {
                         online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                     }
                 }
-                if (Main.Minerals){
+                if (Main.Minerals) {
                     if (item.getType() == Material.COAL_BLOCK) {
                         if (Coal) return;
                         Coal = Boolean.TRUE;
@@ -443,7 +435,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (item.getType() == Material.DIAMOND_BLOCK){
+                    if (item.getType() == Material.DIAMOND_BLOCK) {
                         if (Diamond) return;
                         Diamond = Boolean.TRUE;
                         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -457,8 +449,8 @@ public class Wools implements Listener {
     }
 
     @EventHandler
-    public void onPickUp(EntityPickupItemEvent e){
-        if (e.getEntity().getType() == EntityType.PLAYER){
+    public void onPickUp(EntityPickupItemEvent e) {
+        if (e.getEntity().getType() == EntityType.PLAYER) {
             Item PickItem = e.getItem();
             ItemStack item = PickItem.getItemStack();
             Player p = (Player) e.getEntity();
@@ -584,7 +576,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (item.getType() == Material.TIPPED_ARROW){
+                    if (item.getType() == Material.TIPPED_ARROW) {
                         if (blackWool) return;
                         blackWool = Boolean.TRUE;
                         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -592,7 +584,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (Main.Minerals){
+                    if (Main.Minerals) {
                         if (item.getType() == Material.COAL_BLOCK) {
                             if (Coal) return;
                             Coal = Boolean.TRUE;
@@ -641,7 +633,7 @@ public class Wools implements Listener {
                                 online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                             }
                         }
-                        if (item.getType() == Material.DIAMOND_BLOCK){
+                        if (item.getType() == Material.DIAMOND_BLOCK) {
                             if (Diamond) return;
                             Diamond = Boolean.TRUE;
                             for (Player online : Bukkit.getOnlinePlayers()) {
@@ -650,7 +642,7 @@ public class Wools implements Listener {
                             }
                         }
                     }
-                }else if (Main.HardMode){
+                } else if (Main.HardMode) {
                     if (item.getType() == Material.CAKE) {
                         if (whiteWool) return;
                         whiteWool = Boolean.TRUE;
@@ -771,7 +763,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (item.getType() == Material.CYAN_SHULKER_BOX){
+                    if (item.getType() == Material.CYAN_SHULKER_BOX) {
                         if (blackWool) return;
                         blackWool = Boolean.TRUE;
                         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -779,7 +771,7 @@ public class Wools implements Listener {
                             online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                         }
                     }
-                    if (Main.Minerals){
+                    if (Main.Minerals) {
                         if (item.getType() == Material.COAL_BLOCK) {
                             if (Coal) return;
                             Coal = Boolean.TRUE;
@@ -828,7 +820,7 @@ public class Wools implements Listener {
                                 online.playSound(online.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
                             }
                         }
-                        if (item.getType() == Material.DIAMOND_BLOCK){
+                        if (item.getType() == Material.DIAMOND_BLOCK) {
                             if (Diamond) return;
                             Diamond = Boolean.TRUE;
                             for (Player online : Bukkit.getOnlinePlayers()) {
@@ -843,15 +835,15 @@ public class Wools implements Listener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e){
+    public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        if (Main.UHC){
+        if (Main.UHC) {
             p.setGameMode(GameMode.SPECTATOR);
         }
     }
 
 
-    public static int getObtainedWools(){
+    public static int getObtainedWools() {
         int wools = 0;
 
         if (whiteWool) wools++;
@@ -889,7 +881,7 @@ public class Wools implements Listener {
         return wools;
     }
 
-    public static int getObtainedMinerals(){
+    public static int getObtainedMinerals() {
         int minerals = 0;
 
         if (Coal) minerals++;
