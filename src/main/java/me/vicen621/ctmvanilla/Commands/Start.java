@@ -26,6 +26,7 @@ public class Start implements CommandExecutor {
         plugin.getCommand("uhc").setExecutor(this);
         plugin.getCommand("minerals").setExecutor(this);
         plugin.getCommand("timer").setExecutor(this);
+        plugin.getCommand("playing").setExecutor(this);
     }
 
 
@@ -166,6 +167,55 @@ public class Start implements CommandExecutor {
                 time(secs, mins, hors);
                 running = true;
                 Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer resumed from &3" + hors + ":" + mins + ":" + secs));
+                return true;
+            }
+        }else if (cmd.getName().equalsIgnoreCase("Playing") && sender.isOp()){
+            if (args.length == 0){
+                sender.sendMessage(Utils.chat("&cUsage: /playing <add/remove> <player>"));
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("add")){
+                if (args.length != 2){
+                    sender.sendMessage(Utils.chat(Main.Prefix + "&cUsage: /playing add <player>"));
+                    return true;
+                }
+
+                Player p = Bukkit.getPlayer(args[1]);
+
+                if (p == null){
+                    sender.sendMessage(Utils.chat(Main.Prefix + "&cEl jugador debe estar online"));
+                    return true;
+                }
+
+                if (Main.Playing.contains(p.getUniqueId())){
+                    sender.sendMessage(Utils.chat(Main.Prefix + p.getName() + " &cYa esta en la lista de jugadores!"));
+                    return true;
+                }
+
+                Main.Playing.add(p.getUniqueId());
+                sender.sendMessage(Utils.chat(Main.Prefix + "Agregaste a " + p.getName() + " a la Lista de Jugadores"));
+                return true;
+            } else if (args[0].equalsIgnoreCase("remove")){
+                if (args.length != 2){
+                    sender.sendMessage(Utils.chat(Main.Prefix + "&cUsage: /playing remove <player>"));
+                    return true;
+                }
+
+                Player p = Bukkit.getPlayer(args[1]);
+
+                if (p == null){
+                    sender.sendMessage(Utils.chat(Main.Prefix + "&cEl jugador debe estar online"));
+                    return true;
+                }
+
+                if (!Main.Playing.contains(p.getUniqueId())){
+                    sender.sendMessage(Utils.chat(Main.Prefix + p.getName() + " &cYa esta fuera de la lista de jugadores!"));
+                    return true;
+                }
+
+                Main.Playing.remove(p.getUniqueId());
+                sender.sendMessage(Utils.chat(Main.Prefix + "Agregaste a " + p.getName() + " a la lista de jugadores!"));
                 return true;
             }
         }

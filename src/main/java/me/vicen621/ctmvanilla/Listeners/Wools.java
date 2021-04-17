@@ -70,6 +70,9 @@ public class Wools implements Listener {
         ItemStack item = e.getCurrentItem();
         Player p = (Player) e.getWhoClicked();
         if (Main.started) {
+
+            if (item == null || item.getType() == Material.AIR) return;
+
             if (Main.NormalMode) {
                 if (item.getType() == Material.CAKE) {
                     if (whiteWool) return;
@@ -455,6 +458,9 @@ public class Wools implements Listener {
             ItemStack item = PickItem.getItemStack();
             Player p = (Player) e.getEntity();
             if (Main.started) {
+
+                if (item == null || item.getType() == Material.AIR) return;
+
                 if (Main.NormalMode) {
                     if (item.getType() == Material.CAKE) {
                         if (whiteWool) return;

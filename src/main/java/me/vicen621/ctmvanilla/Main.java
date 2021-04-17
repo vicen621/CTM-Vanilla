@@ -1,9 +1,6 @@
 package me.vicen621.ctmvanilla;
 
-import me.vicen621.ctmvanilla.Commands.Guides;
-import me.vicen621.ctmvanilla.Commands.ItemsFaltantes;
-import me.vicen621.ctmvanilla.Commands.ReloadConfig;
-import me.vicen621.ctmvanilla.Commands.Start;
+import me.vicen621.ctmvanilla.Commands.*;
 import me.vicen621.ctmvanilla.Listeners.Chat;
 import me.vicen621.ctmvanilla.Listeners.Wools;
 import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
@@ -45,6 +42,7 @@ public final class Main extends JavaPlugin {
         new Chat(this);
         new Guides(this);
         new Start(this);
+        new tl(this);
         new Wools(this);
         new ItemsFaltantes(this);
         new ReloadConfig(this);
