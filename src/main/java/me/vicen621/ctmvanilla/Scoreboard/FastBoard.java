@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2021. Vicen621
+ * All rights reserved.
+ */
+
 package me.vicen621.ctmvanilla.Scoreboard;
 
 import org.bukkit.ChatColor;
