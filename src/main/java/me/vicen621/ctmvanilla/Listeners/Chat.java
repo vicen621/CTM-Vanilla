@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla.Listeners;
 
 import me.vicen621.ctmvanilla.Main;
@@ -12,6 +7,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 public class Chat implements Listener {
 

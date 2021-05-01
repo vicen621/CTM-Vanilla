@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla.Listeners;
 
 import me.vicen621.ctmvanilla.Main;
@@ -23,6 +18,11 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 public class Wools implements Listener {
     private final Main plugin;

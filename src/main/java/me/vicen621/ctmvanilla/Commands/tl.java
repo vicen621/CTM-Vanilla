@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla.Commands;
 
 import me.vicen621.ctmvanilla.Main;
@@ -14,6 +9,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 public class tl implements CommandExecutor {
 

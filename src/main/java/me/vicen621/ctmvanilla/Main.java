@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla;
 
 import me.vicen621.ctmvanilla.Commands.*;
@@ -23,6 +18,11 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.*;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 public final class Main extends JavaPlugin {
 

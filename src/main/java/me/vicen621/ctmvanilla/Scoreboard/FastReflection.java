@@ -1,14 +1,14 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla.Scoreboard;
 
 import org.bukkit.Bukkit;
 
 import java.util.Locale;
 import java.util.Optional;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 /**
  * Small reflection class to use CraftBukkit and NMS

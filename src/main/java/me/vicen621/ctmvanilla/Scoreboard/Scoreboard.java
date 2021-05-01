@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2021. Vicen621
- * All rights reserved.
- */
-
 package me.vicen621.ctmvanilla.Scoreboard;
 
 import me.vicen621.ctmvanilla.Commands.Start;
@@ -15,6 +10,11 @@ import org.bukkit.Statistic;
 
 import java.util.List;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2021 Vicen621.
+ * All rights reserved.
+ */
 
 public class Scoreboard {
     public static void update(FastBoard board) {
