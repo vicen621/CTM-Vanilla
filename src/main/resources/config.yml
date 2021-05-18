@@ -8,7 +8,7 @@
 
 #PlaceHolders:
 # %gamemode%: Shows the current gamemode
-# %obtained_wools%: Displays youre currents wools
+# %obtained_wools%: Displays your currents wools
 # %time_Played%: Displays the time played
 # %total_deaths%: Displays the deaths of all teams
 # %Current_Time%: Displays the current time of the TimeZone you chose in the timeZone slot of the config.yml
