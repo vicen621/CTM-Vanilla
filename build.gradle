@@ -26,10 +26,14 @@ ext {
 group project.property("group")
 
 spigot {
-    name = project.property("pluginName")
-    authors = [project.property("author")]
-    apiVersion = project.property("apiVersion")
-    excludeLibraries = ['*']
+    name project.property("pluginName")
+    authors [project.property("author")]
+    apiVersion project.property("apiVersion")
+    permissions {
+        'ctm.op' {
+            defaults 'op'
+        }
+    }
 }
 
 compileJava {
@@ -44,13 +48,7 @@ archivesBaseName = project.property("pluginName")
 repositories {
     mavenLocal()
     mavenCentral()
-    spigot()
-    bungeecord()
     paper()
-    essentialsX()
-    bStats()
-    enginehub()
-    protocolLib()
     maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
     jitpack()
 }
@@ -66,7 +64,7 @@ dependencies {
 }
 
 shadowJar {
-    classifier = ''
+    archiveClassifier.set('')
     configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
     relocate 'co.aikar.commands', "${packageName}.acf"
     relocate 'co.aikar.locales', "${packageName}.locales"
