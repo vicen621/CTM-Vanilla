@@ -40,6 +40,12 @@ jobs:
       - name: 🐘 Set up Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: 💻 Grant execute permission to gradlew
+        run: chmod +x gradlew
+
+      - name: 🧪 Run tests
+        run: ./gradlew check
+
       - name: 🔨 Build artifacts
         run: ./gradlew build
 
@@ -48,6 +54,13 @@ jobs:
         with:
           name: artifacts
           path: '**/build/libs/'
+
+      - name: 📝 Upload reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: '**/build/reports/'
 
       - name: 🗃 Upload Maven local
         uses: actions/upload-artifact@v3
