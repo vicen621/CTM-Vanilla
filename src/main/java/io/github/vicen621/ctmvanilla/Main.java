@@ -1,12 +1,12 @@
-package me.vicen621.ctmvanilla;
+package io.github.vicen621.ctmvanilla;
 
-import me.vicen621.ctmvanilla.Commands.*;
-import me.vicen621.ctmvanilla.Listeners.Chat;
-import me.vicen621.ctmvanilla.Listeners.Wools;
-import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
-import me.vicen621.ctmvanilla.Scoreboard.Scoreboard;
-import me.vicen621.ctmvanilla.Utils.ConfigFile;
-import me.vicen621.ctmvanilla.Utils.Utils;
+import fr.mrmicky.fastboard.FastBoard;
+import io.github.vicen621.ctmvanilla.commands.*;
+import io.github.vicen621.ctmvanilla.listeners.Chat;
+import io.github.vicen621.ctmvanilla.listeners.Wools;
+import io.github.vicen621.ctmvanilla.scoreboard.Scoreboard;
+import io.github.vicen621.ctmvanilla.Utils.ConfigFile;
+import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -54,7 +54,7 @@ public final class Main extends JavaPlugin {
         scoreboards();
         Playing.clear();
 
-        getServer().getScheduler().runTaskTimer(this, () -> {
+        getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             for (FastBoard board : boards.values()) {
                 board.updateTitle(Utils.chat(config.getConfig().getString("scoreboard.title")));
                 Scoreboard.update(board);
@@ -95,14 +95,10 @@ public final class Main extends JavaPlugin {
                                 if (rt == 4) type = FireworkEffect.Type.CREEPER;
                                 if (rt == 5) type = FireworkEffect.Type.STAR;
 
-                                //Get our random colours
-                                int r1i = r.nextInt(17) + 1;
-                                int r2i = r.nextInt(17) + 1;
-                                Color c1 = Utils.getColor(r1i);
-                                Color c2 = Utils.getColor(r2i);
-
                                 //Create our effect with this
-                                FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
+                                FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean())
+                                        .withColor(Utils.getRandomColor()).withFade(Utils.getRandomColor()).with(type)
+                                        .trail(r.nextBoolean()).build();
 
                                 //Then apply the effect to the meta
                                 fwm.addEffect(effect);
@@ -136,14 +132,10 @@ public final class Main extends JavaPlugin {
                                 if (rt == 4) type = FireworkEffect.Type.CREEPER;
                                 if (rt == 5) type = FireworkEffect.Type.STAR;
 
-                                //Get our random colours
-                                int r1i = r.nextInt(17) + 1;
-                                int r2i = r.nextInt(17) + 1;
-                                Color c1 = Utils.getColor(r1i);
-                                Color c2 = Utils.getColor(r2i);
-
                                 //Create our effect with this
-                                FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
+                                FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean())
+                                        .withColor(Utils.getRandomColor()).withFade(Utils.getRandomColor()).with(type)
+                                        .trail(r.nextBoolean()).build();
 
                                 //Then apply the effect to the meta
                                 fwm.addEffect(effect);
@@ -164,7 +156,6 @@ public final class Main extends JavaPlugin {
 
     private void scoreboards(){
         ScoreboardManager manager = Bukkit.getScoreboardManager();
-        assert manager != null;
         org.bukkit.scoreboard.Scoreboard scoreboard = manager.getMainScoreboard();
 
         if (scoreboard.getObjective("hp") == null){

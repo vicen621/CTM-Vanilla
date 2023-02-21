@@ -1,8 +1,8 @@
-package me.vicen621.ctmvanilla.Listeners;
+package io.github.vicen621.ctmvanilla.listeners;
 
-import me.vicen621.ctmvanilla.Main;
-import me.vicen621.ctmvanilla.Scoreboard.FastBoard;
-import me.vicen621.ctmvanilla.Utils.Utils;
+import fr.mrmicky.fastboard.FastBoard;
+import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -14,10 +14,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 /*
  * Copyright (c) 2021 Vicen621.

@@ -1,9 +1,10 @@
-package me.vicen621.ctmvanilla.Scoreboard;
+package io.github.vicen621.ctmvanilla.scoreboard;
 
-import me.vicen621.ctmvanilla.Commands.Start;
-import me.vicen621.ctmvanilla.Listeners.Wools;
-import me.vicen621.ctmvanilla.Main;
-import me.vicen621.ctmvanilla.Utils.Utils;
+import fr.mrmicky.fastboard.FastBoard;
+import io.github.vicen621.ctmvanilla.commands.Start;
+import io.github.vicen621.ctmvanilla.listeners.Wools;
+import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
