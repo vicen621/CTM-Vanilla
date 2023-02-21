@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "java"
+    id "idea"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "kr.entree.spigradle" version "2.4.3"
+    id "io.freefair.lombok" version "6.6.1"
+}
+
+if (project.hasProperty("local_script")) {
+    apply from: file(local_script + "/build.local.gradle")
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+ext {
+    mcVersion = project.property("mcVersion")
+}
+
+group project.property("group")
+
+spigot {
+    name = project.property("pluginName")
+    authors = [project.property("author")]
+    apiVersion = project.property("apiVersion")
+    excludeLibraries = ['*']
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+archivesBaseName = project.property("pluginName")
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    spigot()
+    bungeecord()
+    paper()
+    essentialsX()
+    bStats()
+    enginehub()
+    protocolLib()
+    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
+    jitpack()
+}
+
+dependencies {
+    // using using paper-api
+    implementation paper(mcVersion)
+
+    implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.2.0'
+
+    shadow "co.aikar:acf-paper:0.5.1-SNAPSHOT"
+    shadow "fr.mrmicky:fastboard:1.2.1"
+}
+
+shadowJar {
+    classifier = ''
+    configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
+    relocate 'co.aikar.commands', "${packageName}.acf"
+    relocate 'co.aikar.locales', "${packageName}.locales"
+    relocate "fr.mrmicky.fastboard", "${packageName}.fastboard"
+}
+
+tasks.build.dependsOn(shadowJar)
+tasks.prepareSpigotPlugins.dependsOn(shadowJar)
+
+processResources {
+    project.properties.put("version", this.version)
+    expand project.properties
+}
+
+defaultTasks 'build'
