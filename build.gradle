@@ -55,7 +55,7 @@ repositories {
 
 dependencies {
     // using using paper-api
-    implementation paper(mcVersion)
+    compileOnly paper(mcVersion)
 
     implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.2.0'
 
