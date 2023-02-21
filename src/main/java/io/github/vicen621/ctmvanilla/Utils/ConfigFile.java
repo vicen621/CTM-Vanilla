@@ -1,6 +1,6 @@
-package me.vicen621.ctmvanilla.Utils;
+package io.github.vicen621.ctmvanilla.Utils;
 
-import me.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

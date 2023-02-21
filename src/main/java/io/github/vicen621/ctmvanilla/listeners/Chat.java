@@ -1,7 +1,7 @@
-package me.vicen621.ctmvanilla.Listeners;
+package io.github.vicen621.ctmvanilla.listeners;
 
-import me.vicen621.ctmvanilla.Main;
-import me.vicen621.ctmvanilla.Utils.Utils;
+import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

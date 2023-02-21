@@ -1,16 +1,17 @@
-package me.vicen621.ctmvanilla.Utils;
+package io.github.vicen621.ctmvanilla.Utils;
 
-import me.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Main;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,12 +19,17 @@ import java.util.regex.Pattern;
  * Copyright (c) 2021 Vicen621.
  * All rights reserved.
  */
-
+@UtilityClass
 public class Utils {
 
-    private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+    private final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+    private final Color[] colors = new Color[]{
+            Color.AQUA, Color.BLACK, Color.BLUE, Color.FUCHSIA, Color.GRAY, Color.GREEN, Color.LIME, Color.MAROON,
+            Color.NAVY, Color.OLIVE, Color.ORANGE, Color.PURPLE, Color.RED, Color.SILVER, Color.TEAL, Color.WHITE,
+            Color.YELLOW
+    };
 
-    public static String chat(String s) {
+    public String chat(String s) {
         if (Bukkit.getVersion().contains("1.16") || Bukkit.getVersion().contains("1.17")) {
             s = s.replace("&#", "#").replace("&k", "");
             Matcher match = pattern.matcher(s);
@@ -36,7 +42,7 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    public static boolean isInt(String s) {
+    public boolean isInt(String s) {
         try {
             Float.parseFloat(s);
         } catch (NumberFormatException nfe) {
@@ -45,7 +51,7 @@ public class Utils {
         return true;
     }
 
-    public static String getTime() {
+    public String getTime() {
         TimeZone tz = TimeZone.getTimeZone(Main.config.getConfig().getString("scoreboard.timeZone"));
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
         df.setTimeZone(tz);
@@ -53,11 +59,11 @@ public class Utils {
         return nowAsISO;
     }
 
-    public static String ListChat(List<String> s) {
+    public String ListChat(List<String> s) {
         return ChatColor.translateAlternateColorCodes('&', String.valueOf(s));
     }
 
-    public static String formatTime(int secs) {
+    public String formatTime(int secs) {
         int remainder = secs % 86400;
 
         int days = secs / 86400;
@@ -76,60 +82,7 @@ public class Utils {
         }
     }
 
-    public static Color getColor(int i) {
-        Color c = null;
-        if (i == 1) {
-            c = Color.AQUA;
-        }
-        if (i == 2) {
-            c = Color.BLACK;
-        }
-        if (i == 3) {
-            c = Color.BLUE;
-        }
-        if (i == 4) {
-            c = Color.FUCHSIA;
-        }
-        if (i == 5) {
-            c = Color.GRAY;
-        }
-        if (i == 6) {
-            c = Color.GREEN;
-        }
-        if (i == 7) {
-            c = Color.LIME;
-        }
-        if (i == 8) {
-            c = Color.MAROON;
-        }
-        if (i == 9) {
-            c = Color.NAVY;
-        }
-        if (i == 10) {
-            c = Color.OLIVE;
-        }
-        if (i == 11) {
-            c = Color.ORANGE;
-        }
-        if (i == 12) {
-            c = Color.PURPLE;
-        }
-        if (i == 13) {
-            c = Color.RED;
-        }
-        if (i == 14) {
-            c = Color.SILVER;
-        }
-        if (i == 15) {
-            c = Color.TEAL;
-        }
-        if (i == 16) {
-            c = Color.WHITE;
-        }
-        if (i == 17) {
-            c = Color.YELLOW;
-        }
-
-        return c;
+    public Color getRandomColor() {
+        return colors[ThreadLocalRandom.current().nextInt(colors.length)];
     }
 }
