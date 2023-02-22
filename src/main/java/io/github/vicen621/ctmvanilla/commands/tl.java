@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
  */
 
 //TODO
+//description: Broadcast you're location to the other players, if you put any arguments it sends before the location
 public class tl implements CommandExecutor {
 
     private final Main plugin;

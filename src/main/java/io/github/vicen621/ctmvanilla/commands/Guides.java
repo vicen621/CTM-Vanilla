@@ -14,6 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
  */
 
 //TODO Agregar los 2 comandos a la config para que puedan ser modificables
+//description: gives the guide to the player
 public class Guides implements CommandExecutor {
 
     private final Main plugin;

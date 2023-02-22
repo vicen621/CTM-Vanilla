@@ -32,6 +32,7 @@ public class CTMVanillaCommand extends BaseCommand {
     }
 
     @CommandAlias("wools")
+    @Description("Shows the missing wools and minerals to won the game")
     public void onWools(CommandSender sender) {
         if (gameManager.getGameState() != GameManager.GameState.PLAYING) {
             StringUtils.sendMessage(sender, "&cNo game running, please start the game to see the missing items");
@@ -48,12 +49,14 @@ public class CTMVanillaCommand extends BaseCommand {
 
     @CommandAlias("reload")
     @CommandPermission("ctm.op")
+    @Description("Reloads the configuration file")
     public void onReload(CommandSender sender) {
         plugin.updateConfig();
         StringUtils.sendMessage(sender, "Reload complete");
     }
 
     @CommandAlias("guide")
+    @Description("Gives the guide to the player")
     public static class GuideCommand extends BaseCommand {
 
         @Default @CatchUnknown @HelpCommand

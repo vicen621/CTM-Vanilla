@@ -40,7 +40,7 @@ public class Start implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        // START
+        // START: start the game
         if (cmd.getName().equalsIgnoreCase("start")) {
             if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
@@ -106,7 +106,7 @@ public class Start implements CommandExecutor {
             }
         }
 
-        // UHC
+        // UHC: toggles the uhc game mode
         else if (cmd.getName().equalsIgnoreCase("uhc")) {
             if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
@@ -122,7 +122,7 @@ public class Start implements CommandExecutor {
             return true;
         }
 
-        // MINERALS
+        // MINERALS: toggles the minerals game mode
         else if (cmd.getName().equalsIgnoreCase("minerals")) {
             if (!sender.hasPermission("ctm.op")) {
                 sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
@@ -138,7 +138,7 @@ public class Start implements CommandExecutor {
             return true;
         }
 
-        // TIMER
+        // TIMER: resumes, stops and set the timer
         else if (cmd.getName().equalsIgnoreCase("timer") && sender.isOp()){
             if (args.length == 0){
                 sender.sendMessage(StringUtils.chat("&c/timer <set/stop/resume>"));
@@ -184,7 +184,7 @@ public class Start implements CommandExecutor {
             }
         }
 
-        //PLAYING
+        //PLAYING: adds or remove players from the Player's list
         else if (cmd.getName().equalsIgnoreCase("Playing") && sender.isOp()){
             if (args.length == 0){
                 sender.sendMessage(StringUtils.chat("&cUsage: /playing <add/remove> <player>"));
