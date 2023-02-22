@@ -29,6 +29,7 @@ spigot {
     name project.property("pluginName")
     authors [project.property("author")]
     apiVersion project.property("apiVersion")
+    softDepends 'PlaceholderAPI'
     permissions {
         'ctm.op' {
             defaults 'op'
