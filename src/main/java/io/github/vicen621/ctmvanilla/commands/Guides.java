@@ -1,6 +1,7 @@
 package io.github.vicen621.ctmvanilla.commands;
 
 import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
  * All rights reserved.
  */
 
+//TODO Agregar los 2 comandos a la config para que puedan ser modificables
 public class Guides implements CommandExecutor {
 
     private final Main plugin;
@@ -25,11 +27,11 @@ public class Guides implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("guide")) {
             if (sender instanceof ConsoleCommandSender) {
-                sender.sendMessage(Utils.chat("&cThis command only can be used by players"));
+                sender.sendMessage(StringUtils.chat("&cThis command only can be used by players"));
                 return true;
             }
             if (args.length == 0) {
-                sender.sendMessage(Utils.chat("&cPlease specify: normal | hardmode"));
+                sender.sendMessage(StringUtils.chat("&cPlease specify: normal | hardmode"));
                 return true;
             }
             if (args.length == 1 && args[0].equalsIgnoreCase("normal")) {

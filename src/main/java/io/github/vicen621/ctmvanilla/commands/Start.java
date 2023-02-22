@@ -1,7 +1,9 @@
 package io.github.vicen621.ctmvanilla.commands;
 
 import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.Utils.Utils;
+import io.github.vicen621.ctmvanilla.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
@@ -19,6 +21,7 @@ import java.util.Objects;
  * All rights reserved.
  */
 
+//TODO
 public class Start implements CommandExecutor {
 
     private final Main plugin;
@@ -37,109 +40,114 @@ public class Start implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // START
         if (cmd.getName().equalsIgnoreCase("start")) {
             if (!sender.hasPermission("ctm.op")) {
-                sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
+                sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
                 return true;
             }
             if (args.length == 0) {
-                sender.sendMessage(Utils.chat("&cPlease specify: normal | hardmode"));
+                sender.sendMessage(StringUtils.chat("&cPlease specify: normal | hardmode"));
                 return true;
             }
             if (args.length == 1 && args[0].equalsIgnoreCase("normal")) {
-                if (Main.started) {
-                    sender.sendMessage(Utils.chat("&cYou only can do this command one time!"));
+                if (plugin.getGameManager().getGameState() == GameManager.GameState.PLAYING) {
+                    sender.sendMessage(StringUtils.chat("&cYou only can do this command one time!"));
                     return true;
                 }
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aNormalMode has been enabled"));
+                
+                Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "&aNormalMode has been enabled"));
                 time(0, 0, 0);
                 running = true;
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.getGameMode() == GameMode.SURVIVAL) {
-                        Main.Playing.add(p.getUniqueId());
-                    }
-                }
-                Main.started = Boolean.TRUE;
-                Main.NormalMode = Boolean.TRUE;
-                if (Main.UHC) {
-                    World world = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.over")));
-                    World nether = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.nether")));
-                    World end = Bukkit.getWorld(Objects.requireNonNull(Main.config.getConfig().getString("world.end")));
-                    world.setGameRule(GameRule.NATURAL_REGENERATION, false);
-                    nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
-                    end.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                plugin.getGameManager().getPlaying()
+                        .addAll(Bukkit.getOnlinePlayers().stream()
+                                .filter(p -> p.getGameMode() == GameMode.SURVIVAL)
+                                .map(Player::getUniqueId)
+                                .toList()
+                        );
+                
+                // Main.started = Boolean.TRUE;
+                // Main.NormalMode = Boolean.TRUE;
+                if (plugin.getGameManager().isUhc()) {
+                    // World world = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.over")));
+                    // World nether = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.nether")));
+                    // World end = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.end")));
+                    // world.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                    // nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                    // end.setGameRule(GameRule.NATURAL_REGENERATION, false);
                 }
                 return true;
             } else if (args.length == 1 && args[0].equalsIgnoreCase("hardmode") && sender.isOp()) {
-                if (Main.started) {
-                    sender.sendMessage(Utils.chat("&cYou only can do this command one time!"));
+                if (plugin.getGameManager().getGameState() == GameManager.GameState.PLAYING) {
+                    sender.sendMessage(StringUtils.chat("&cYou only can do this command one time!"));
                     return true;
                 }
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aHardMode has been enabled"));
+                Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "&aHardMode has been enabled"));
                 time(0, 0, 0);
                 running = true;
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.getGameMode() == GameMode.SURVIVAL) {
-                        Main.Playing.add(p.getUniqueId());
-                    }
+                plugin.getGameManager().getPlaying()
+                        .addAll(Bukkit.getOnlinePlayers().stream()
+                                .filter(p -> p.getGameMode() == GameMode.SURVIVAL)
+                                .map(Player::getUniqueId)
+                                .toList()
+                        );
+
+                // Main.started = Boolean.TRUE;
+                // Main.NormalMode = Boolean.TRUE;
+                if (plugin.getGameManager().isUhc()) {
+                    // World world = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.over")));
+                    // World nether = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.nether")));
+                    // World end = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.end")));
+                    // world.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                    // nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                    // end.setGameRule(GameRule.NATURAL_REGENERATION, false);
                 }
-                Main.started = Boolean.TRUE;
-                Main.HardMode = Boolean.TRUE;
-                if (Main.UHC) {
-                    World world = Bukkit.getWorld("world");
-                    World nether = Bukkit.getWorld("world_nether");
-                    World end = Bukkit.getWorld("world_the_end");
-                    world.setGameRule(GameRule.NATURAL_REGENERATION, false);
-                    nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
-                    end.setGameRule(GameRule.NATURAL_REGENERATION, false);
-                }
                 return true;
             }
-        } else if (cmd.getName().equalsIgnoreCase("uhc")) {
+        }
+
+        // UHC
+        else if (cmd.getName().equalsIgnoreCase("uhc")) {
             if (!sender.hasPermission("ctm.op")) {
-                sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
+                sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
                 return true;
             }
-            if (Main.started) {
-                sender.sendMessage(Utils.chat("&cYou can't execute this command during game"));
+            if (plugin.getGameManager().getGameState() == GameManager.GameState.PLAYING) {
+                sender.sendMessage(StringUtils.chat("&cYou can't execute this command during game"));
                 return true;
             }
-            if (!Main.UHC) {
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aUHC Mode has been enabled"));
-                Main.UHC = Boolean.TRUE;
-                return true;
-            } else {
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&cUHC Mode has been disabled"));
-                Main.UHC = Boolean.FALSE;
-                return true;
-            }
-        } else if (cmd.getName().equalsIgnoreCase("minerals")) {
+
+            plugin.getGameManager().setUhc(!plugin.getGameManager().isUhc());
+            Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "UHC Mode has been " + (plugin.getGameManager().isUhc() ? "&aenabled" : "&cdisabled")));
+            return true;
+        }
+
+        // MINERALS
+        else if (cmd.getName().equalsIgnoreCase("minerals")) {
             if (!sender.hasPermission("ctm.op")) {
-                sender.sendMessage(Utils.chat("You don't have permissions to execute this command"));
+                sender.sendMessage(StringUtils.chat("You don't have permissions to execute this command"));
                 return true;
             }
-            if (Main.started) {
-                sender.sendMessage(Utils.chat("&cYou can't execute this command during game"));
+            if (plugin.getGameManager().getGameState() == GameManager.GameState.PLAYING) {
+                sender.sendMessage(StringUtils.chat("&cYou can't execute this command during game"));
                 return true;
             }
-            if (!Main.Minerals) {
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&aMinerals Mode has been enabled"));
-                Main.Minerals = Boolean.TRUE;
-                return true;
-            } else {
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "&cMinerals Mode has been disabled"));
-                Main.Minerals = Boolean.FALSE;
-                return true;
-            }
-        }else if (cmd.getName().equalsIgnoreCase("timer") && sender.isOp()){
+
+            plugin.getGameManager().setMinerals(!plugin.getGameManager().isMinerals());
+            Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "Minerals Mode has been " + (plugin.getGameManager().isMinerals() ? "&aenabled" : "&cdisabled")));
+            return true;
+        }
+
+        // TIMER
+        else if (cmd.getName().equalsIgnoreCase("timer") && sender.isOp()){
             if (args.length == 0){
-                sender.sendMessage(Utils.chat("&c/timer <set/stop/resume>"));
+                sender.sendMessage(StringUtils.chat("&c/timer <set/stop/resume>"));
                 return true;
             }
 
             if (args[0].equalsIgnoreCase("set")){
                 if (args.length != 4){
-                    sender.sendMessage(Utils.chat("&c/timer set <hours> <minutes> <seconds>"));
+                    sender.sendMessage(StringUtils.chat("&c/timer set <hours> <minutes> <seconds>"));
                     return true;
                 }
 
@@ -151,16 +159,16 @@ public class Start implements CommandExecutor {
                         public void run() {
                             time(Integer.parseInt(args[3]), Integer.parseInt(args[2]), Integer.parseInt(args[1]));
                             running = true;
-                            Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer setted to &3" + args[1] + ":" + args[2] + ":" + args[3]));
+                            Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "Timer setted to &3" + args[1] + ":" + args[2] + ":" + args[3]));
                         }
                     }.runTaskLater(plugin, 21L);
                 }else{
-                    sender.sendMessage(Utils.chat("&c/timer set <secs> <mins> <hours>"));
+                    sender.sendMessage(StringUtils.chat("&c/timer set <secs> <mins> <hours>"));
                     return true;
                 }
             }else if (args[0].equalsIgnoreCase("stop")){
                 running = false;
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer stoped"));
+                Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "Timer stoped"));
             }else if (args[0].equalsIgnoreCase("resume")){
                 String[] parts = timer.split(":");
                 int secs = Integer.parseInt(parts[2]);
@@ -171,56 +179,59 @@ public class Start implements CommandExecutor {
 
                 time(secs, mins, hors);
                 running = true;
-                Bukkit.broadcastMessage(Utils.chat(Main.Prefix + "Timer resumed from &3" + hors + ":" + mins + ":" + secs));
+                Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "Timer resumed from &3" + hors + ":" + mins + ":" + secs));
                 return true;
             }
-        }else if (cmd.getName().equalsIgnoreCase("Playing") && sender.isOp()){
+        }
+
+        //PLAYING
+        else if (cmd.getName().equalsIgnoreCase("Playing") && sender.isOp()){
             if (args.length == 0){
-                sender.sendMessage(Utils.chat("&cUsage: /playing <add/remove> <player>"));
+                sender.sendMessage(StringUtils.chat("&cUsage: /playing <add/remove> <player>"));
                 return true;
             }
 
             if (args[0].equalsIgnoreCase("add")){
                 if (args.length != 2){
-                    sender.sendMessage(Utils.chat(Main.Prefix + "&cUsage: /playing add <player>"));
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "&cUsage: /playing add <player>"));
                     return true;
                 }
 
                 Player p = Bukkit.getPlayer(args[1]);
 
                 if (p == null){
-                    sender.sendMessage(Utils.chat(Main.Prefix + "&cEl jugador debe estar online"));
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "&cEl jugador debe estar online"));
                     return true;
                 }
 
-                if (Main.Playing.contains(p.getUniqueId())){
-                    sender.sendMessage(Utils.chat(Main.Prefix + p.getName() + " &cYa esta en la lista de jugadores!"));
+                if (plugin.getGameManager().isPlaying(p)){
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + p.getName() + " &cYa esta en la lista de jugadores!"));
                     return true;
                 }
 
-                Main.Playing.add(p.getUniqueId());
-                sender.sendMessage(Utils.chat(Main.Prefix + "Agregaste a " + p.getName() + " a la Lista de Jugadores"));
+                plugin.getGameManager().getPlaying().add(p.getUniqueId());
+                sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "Agregaste a " + p.getName() + " a la Lista de Jugadores"));
                 return true;
             } else if (args[0].equalsIgnoreCase("remove")){
                 if (args.length != 2){
-                    sender.sendMessage(Utils.chat(Main.Prefix + "&cUsage: /playing remove <player>"));
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "&cUsage: /playing remove <player>"));
                     return true;
                 }
 
                 Player p = Bukkit.getPlayer(args[1]);
 
                 if (p == null){
-                    sender.sendMessage(Utils.chat(Main.Prefix + "&cEl jugador debe estar online"));
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "&cEl jugador debe estar online"));
                     return true;
                 }
 
-                if (!Main.Playing.contains(p.getUniqueId())){
-                    sender.sendMessage(Utils.chat(Main.Prefix + p.getName() + " &cYa esta fuera de la lista de jugadores!"));
+                if (!plugin.getGameManager().isPlaying(p)){
+                    sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + p.getName() + " &cYa esta fuera de la lista de jugadores!"));
                     return true;
                 }
 
-                Main.Playing.remove(p.getUniqueId());
-                sender.sendMessage(Utils.chat(Main.Prefix + "Agregaste a " + p.getName() + " a la lista de jugadores!"));
+                plugin.getGameManager().getPlaying().remove(p.getUniqueId());
+                sender.sendMessage(StringUtils.chat(StringUtils.PREFIX + "Agregaste a " + p.getName() + " a la lista de jugadores!"));
                 return true;
             }
         }

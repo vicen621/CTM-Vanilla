@@ -49,15 +49,17 @@ repositories {
     mavenLocal()
     mavenCentral()
     paper()
-    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
     jitpack()
+    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
     // using using paper-api
     compileOnly paper(mcVersion)
 
-    implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.2.0'
+    implementation 'com.github.Exlll.ConfigLib:configlib-paper:v4.2.0'
+    compileOnly 'me.clip:placeholderapi:2.11.2'
 
     shadow "co.aikar:acf-paper:0.5.1-SNAPSHOT"
     shadow "fr.mrmicky:fastboard:1.2.1"
