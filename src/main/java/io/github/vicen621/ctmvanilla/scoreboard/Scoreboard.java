@@ -1,10 +1,10 @@
 package io.github.vicen621.ctmvanilla.scoreboard;
 
 import fr.mrmicky.fastboard.FastBoard;
+import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
-import io.github.vicen621.ctmvanilla.Main;
 import lombok.experimental.UtilityClass;
 import org.bukkit.entity.Player;
 
@@ -17,8 +17,8 @@ import java.util.List;
 
 @UtilityClass
 public class Scoreboard {
-    private GameManager gameManager = Main.getInstance().getGameManager();
-    private Config config = Main.getInstance().getConfiguration();
+    private final GameManager gameManager = Main.getInstance().getGameManager();
+    private final Config config = Main.getInstance().getConfiguration();
 
     public static void update(FastBoard board) {
         Player p = board.getPlayer();

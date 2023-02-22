@@ -5,7 +5,6 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.game.Wool;
 import io.github.vicen621.ctmvanilla.game.WoolManager;
@@ -26,7 +25,9 @@ public class CTMVanillaCommand extends BaseCommand {
     @Dependency
     private WoolManager woolManager;
 
-    @Default @CatchUnknown @HelpCommand
+    @Default
+    @CatchUnknown
+    @HelpCommand
     public void onDefault(CommandSender sender, CommandHelp help) {
         help.showHelp();
     }
@@ -59,7 +60,9 @@ public class CTMVanillaCommand extends BaseCommand {
     @Description("Gives the guide to the player")
     public static class GuideCommand extends BaseCommand {
 
-        @Default @CatchUnknown @HelpCommand
+        @Default
+        @CatchUnknown
+        @HelpCommand
         public void onDefault(CommandSender sender, CommandHelp help) {
             help.showHelp();
         }

@@ -2,11 +2,9 @@ package io.github.vicen621.ctmvanilla.config;
 
 import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
-import de.exlll.configlib.Serializer;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.TimeZone;
 
 @Configuration
 @Getter
@@ -66,10 +64,10 @@ public class Config {
 
             @Comment({"", "Scorebard that shown when you won the game"})
             List<String> wonBoard
-    ) {}
+    ) { }
 
     public record GameConfig(
             int maxGameTimeNormalMode,
             int maxGameTimeHardMode
-    ) {}
+    ) { }
 }

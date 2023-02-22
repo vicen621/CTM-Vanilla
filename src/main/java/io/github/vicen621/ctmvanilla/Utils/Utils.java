@@ -2,18 +2,13 @@ package io.github.vicen621.ctmvanilla.Utils;
 
 import io.github.vicen621.ctmvanilla.Main;
 import lombok.experimental.UtilityClass;
-import org.bukkit.*;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Statistic;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /*
  * Copyright (c) 2021 Vicen621.
@@ -39,7 +34,7 @@ public class Utils {
     public static int getTotalDeaths() {
         int deaths = 0;
 
-        for (UUID uuid : Main.getInstance().getGameManager().getPlaying()){
+        for (UUID uuid : Main.getInstance().getGameManager().getPlaying()) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
             deaths += p.getStatistic(Statistic.DEATHS);
         }

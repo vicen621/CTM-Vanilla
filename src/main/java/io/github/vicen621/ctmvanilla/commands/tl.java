@@ -2,7 +2,6 @@ package io.github.vicen621.ctmvanilla.commands;
 
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -29,13 +28,13 @@ public class tl implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("tl") && sender instanceof Player p){
-            if (!plugin.getGameManager().isPlaying(p)){
+        if (cmd.getName().equalsIgnoreCase("tl") && sender instanceof Player p) {
+            if (!plugin.getGameManager().isPlaying(p)) {
                 StringUtils.sendMessage(p, "&cEste comando solo puede ser usado por los jugadores!");
                 return true;
             }
 
-            if (args.length == 0){
+            if (args.length == 0) {
 
                 String prefix = StringUtils.chat("&#313535[&bTL&#313535] &#4b5061» ");
                 String format = "&3&o{name}&8&o: &7X: &a{x} &7Y: &a{y} &7Z: &a{z} &8(&c{dimention}&8)";
@@ -50,7 +49,7 @@ public class tl implements CommandExecutor {
 
                 Bukkit.broadcastMessage(StringUtils.chat(prefix + format));
                 return true;
-            }else {
+            } else {
                 StringBuilder message = new StringBuilder();
                 for (String part : args) {
                     if (!message.toString().equals(""))

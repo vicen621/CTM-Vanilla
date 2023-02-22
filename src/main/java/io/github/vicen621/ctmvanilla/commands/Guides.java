@@ -2,7 +2,6 @@ package io.github.vicen621.ctmvanilla.commands;
 
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

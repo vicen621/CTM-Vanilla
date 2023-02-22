@@ -5,12 +5,10 @@ import io.github.vicen621.ctmvanilla.Utils.Utils;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.TimeZone;
 
 public class PlaceHolderAPIHook extends PlaceholderExpansion {
     private final Main plugin;

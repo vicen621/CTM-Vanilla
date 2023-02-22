@@ -2,7 +2,6 @@ package io.github.vicen621.ctmvanilla.game;
 
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

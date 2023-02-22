@@ -1,25 +1,25 @@
 package io.github.vicen621.ctmvanilla;
 
-import de.exlll.configlib.*;
+import de.exlll.configlib.ConfigLib;
+import de.exlll.configlib.NameFormatters;
+import de.exlll.configlib.YamlConfigurationProperties;
+import de.exlll.configlib.YamlConfigurationStore;
 import fr.mrmicky.fastboard.FastBoard;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.commands.*;
+import io.github.vicen621.ctmvanilla.commands.Guides;
+import io.github.vicen621.ctmvanilla.commands.Start;
+import io.github.vicen621.ctmvanilla.commands.tl;
 import io.github.vicen621.ctmvanilla.config.Config;
+import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.game.WoolManager;
 import io.github.vicen621.ctmvanilla.hooks.PlaceHolderAPIHook;
 import io.github.vicen621.ctmvanilla.listeners.ChatListener;
 import io.github.vicen621.ctmvanilla.listeners.PlayerListeners;
 import io.github.vicen621.ctmvanilla.listeners.WoolsListeners;
-import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.scoreboard.Scoreboard;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.bukkit.*;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -27,7 +27,8 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Copyright (c) 2021 Vicen621.
@@ -38,17 +39,14 @@ import java.util.*;
 @Getter
 public final class Main extends JavaPlugin {
 
+    public static Map<String, FastBoard> boards = new HashMap<>();
     @Getter
     private static Main instance;
-
     @Getter(AccessLevel.NONE)
     private YamlConfigurationStore<Config> configStore;
-
     private Config configuration;
     private GameManager gameManager;
     private WoolManager woolManager;
-
-    public static Map<String, FastBoard> boards = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -177,11 +175,11 @@ public final class Main extends JavaPlugin {
         configuration = configStore.update(configFile);
     }
 
-    private void scoreboards(){
+    private void scoreboards() {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         org.bukkit.scoreboard.Scoreboard scoreboard = manager.getMainScoreboard();
 
-        if (scoreboard.getObjective("hp") == null){
+        if (scoreboard.getObjective("hp") == null) {
             Objective objective = scoreboard.registerNewObjective("hp", "health", StringUtils.chat("&c❤"));
             objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }

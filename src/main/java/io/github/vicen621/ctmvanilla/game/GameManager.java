@@ -4,7 +4,6 @@ import io.github.vicen621.ctmvanilla.Main;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
