@@ -6,8 +6,8 @@ import co.aikar.commands.annotation.*;
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.game.GameManager;
-import io.github.vicen621.ctmvanilla.game.Wool;
-import io.github.vicen621.ctmvanilla.game.WoolManager;
+import io.github.vicen621.ctmvanilla.game.wool.Wool;
+import io.github.vicen621.ctmvanilla.game.wool.WoolManager;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.command.CommandSender;
 

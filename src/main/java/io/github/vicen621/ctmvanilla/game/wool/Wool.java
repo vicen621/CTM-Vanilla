@@ -1,4 +1,4 @@
-package io.github.vicen621.ctmvanilla.game;
+package io.github.vicen621.ctmvanilla.game.wool;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -77,13 +77,13 @@ public class Wool {
 
     @UtilityClass
     public static class Minerals {
-        private final Wool COAL_BLOCK = new Wool(Material.CAKE, "Coal Block", true);
-        private final Wool IRON_BLOCK = new Wool(Material.DAMAGED_ANVIL, "Iron Block", true);
-        private final Wool GOLD_BLOCK = new Wool(Material.RABBIT_STEW, "Gold Block", true);
-        private final Wool LAPIS_BLOCK = new Wool(Material.OBSERVER, "Lapis Block", true);
-        private final Wool REDSTONE_BLOCK = new Wool(Material.HEART_OF_THE_SEA, "Redstone Block", true);
-        private final Wool EMERALD_BLOCK = new Wool(Material.SKULL_BANNER_PATTERN, "Emerald Block", true);
-        private final Wool DIAMOND_BLOCK = new Wool(Material.ENDER_CHEST, "Diamond Block", true);
+        private final Wool COAL_BLOCK = new Wool(Material.COAL_BLOCK, "Block of Coal", true);
+        private final Wool IRON_BLOCK = new Wool(Material.IRON_BLOCK, "Block of Iron", true);
+        private final Wool GOLD_BLOCK = new Wool(Material.GOLD_BLOCK, "Block of Gold", true);
+        private final Wool LAPIS_BLOCK = new Wool(Material.LAPIS_BLOCK, "Block of Lapis", true);
+        private final Wool REDSTONE_BLOCK = new Wool(Material.REDSTONE_BLOCK, "Block of Redstone", true);
+        private final Wool EMERALD_BLOCK = new Wool(Material.EMERALD_BLOCK, "Block of Emerald", true);
+        private final Wool DIAMOND_BLOCK = new Wool(Material.DIAMOND_BLOCK, "Block of Diamond", true);
 
         public final Wool[] MINERALS = new Wool[]{
                 COAL_BLOCK, IRON_BLOCK, GOLD_BLOCK, LAPIS_BLOCK, REDSTONE_BLOCK, EMERALD_BLOCK, DIAMOND_BLOCK

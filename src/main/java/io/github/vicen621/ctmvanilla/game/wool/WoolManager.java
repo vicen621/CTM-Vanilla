@@ -1,7 +1,8 @@
-package io.github.vicen621.ctmvanilla.game;
+package io.github.vicen621.ctmvanilla.game.wool;
 
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
+import io.github.vicen621.ctmvanilla.game.GameManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -65,7 +66,7 @@ public class WoolManager {
         return wools.stream().filter(wool -> wool.getName().equalsIgnoreCase(color)).findFirst();
     }
 
-    public void woolObtained(Wool wool, String player) {
+    public void woolObtained(Wool wool, String player, String currentTime) {
         if (wool.isTaken())
             return;
 
@@ -76,8 +77,10 @@ public class WoolManager {
         else
             obtainedWools++;
 
+        Bukkit.broadcastMessage("&6" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
+
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + " item"), StringUtils.chat("&6Obtained by " + player));
+            p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + (wool.isMineral() ? "" : " item")), StringUtils.chat("&6Obtained by " + player));
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
         }
     }

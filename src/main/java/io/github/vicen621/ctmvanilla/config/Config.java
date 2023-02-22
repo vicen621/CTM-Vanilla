@@ -2,7 +2,10 @@ package io.github.vicen621.ctmvanilla.config;
 
 import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
+import de.exlll.configlib.Serializer;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 import java.util.List;
 
@@ -47,8 +50,14 @@ public class Config {
             )
     );
 
+    private WorldsConfig worlds = new WorldsConfig(
+            Bukkit.getWorld("world"),
+            Bukkit.getWorld("world_nether"),
+            Bukkit.getWorld("world_the_end")
+    );
+
     @Comment("Time in minutes")
-    private GameConfig game = new GameConfig(180, 120);
+    private GameConfig game = new GameConfig(120, 180);
 
     public record ScoreboardConfig(
             String title,
@@ -70,4 +79,23 @@ public class Config {
             int maxGameTimeNormalMode,
             int maxGameTimeHardMode
     ) { }
+
+    public record WorldsConfig(
+            World overworld,
+            World nether,
+            World theEnd
+    ) { }
+
+    public static class WorldToStringSerializer implements Serializer<World, String> {
+
+        @Override
+        public String serialize(World element) {
+            return element.getName();
+        }
+
+        @Override
+        public World deserialize(String element) {
+            return Bukkit.getWorld(element);
+        }
+    }
 }

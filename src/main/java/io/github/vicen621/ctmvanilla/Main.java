@@ -11,7 +11,7 @@ import io.github.vicen621.ctmvanilla.commands.Start;
 import io.github.vicen621.ctmvanilla.commands.tl;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
-import io.github.vicen621.ctmvanilla.game.WoolManager;
+import io.github.vicen621.ctmvanilla.game.wool.WoolManager;
 import io.github.vicen621.ctmvanilla.hooks.PlaceHolderAPIHook;
 import io.github.vicen621.ctmvanilla.listeners.ChatListener;
 import io.github.vicen621.ctmvanilla.listeners.PlayerListeners;
@@ -20,6 +20,7 @@ import io.github.vicen621.ctmvanilla.scoreboard.Scoreboard;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -147,6 +148,7 @@ public final class Main extends JavaPlugin {
                           %ctmv_total_deaths%: Displays the deaths of all teams
                         """)
                 .setNameFormatter(NameFormatters.LOWER_UNDERSCORE)
+                .addSerializer(World.class, new Config.WorldToStringSerializer())
                 .build();
 
         Path configFile = new File(getDataFolder(), "config.yml").toPath();

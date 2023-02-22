@@ -1,9 +1,14 @@
 package io.github.vicen621.ctmvanilla.game;
 
 import io.github.vicen621.ctmvanilla.Main;
+import io.github.vicen621.ctmvanilla.Utils.StringUtils;
+import io.github.vicen621.ctmvanilla.game.timer.TimerManager;
+import io.github.vicen621.ctmvanilla.game.timer.TimerThread;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,7 @@ public class GameManager {
 
     private GameState gameState;
     private GameMode gameMode;
+    private TimerManager timer;
     private boolean uhc;
     private boolean minerals;
 
@@ -30,6 +36,29 @@ public class GameManager {
         this.gameMode = GameMode.NORMAL;
         this.uhc = false;
         this.minerals = false;
+    }
+
+    public void startGame() {
+        Bukkit.broadcastMessage(StringUtils.chat(StringUtils.PREFIX + "&aNormalMode has been enabled"));
+        //this.timer = new TimerThread(plugin, );
+        //running = true;
+        plugin.getGameManager().getPlaying()
+                .addAll(Bukkit.getOnlinePlayers().stream()
+                        .filter(p -> p.getGameMode() == org.bukkit.GameMode.SURVIVAL)
+                        .map(Player::getUniqueId)
+                        .toList()
+                );
+
+        // Main.started = Boolean.TRUE;
+        // Main.NormalMode = Boolean.TRUE;
+        if (plugin.getGameManager().isUhc()) {
+            // World world = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.over")));
+            // World nether = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.nether")));
+            // World end = Bukkit.getWorld(Objects.requireNonNull(Main.getConfig().getConfig().getString("world.end")));
+            // world.setGameRule(GameRule.NATURAL_REGENERATION, false);
+            // nether.setGameRule(GameRule.NATURAL_REGENERATION, false);
+            // end.setGameRule(GameRule.NATURAL_REGENERATION, false);
+        }
     }
 
     public void setGameMode(GameMode mode) {
@@ -50,8 +79,14 @@ public class GameManager {
     }
 
     public enum GameMode {
-        NORMAL,
-        HARD,
-        NIGHTMARE
+        NORMAL(Main.getInstance().getConfiguration().getGame().maxGameTimeNormalMode()),
+        HARD(Main.getInstance().getConfiguration().getGame().maxGameTimeHardMode()),
+        NIGHTMARE(0);
+
+        private final int time;
+
+        GameMode(int time) {
+            this.time = time;
+        }
     }
 }
