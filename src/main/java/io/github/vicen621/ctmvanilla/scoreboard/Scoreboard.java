@@ -30,7 +30,7 @@ public class Scoreboard {
             case WON -> lines = config.getScoreboard().wonBoard();
         }
 
-        lines = lines.stream().map(line -> StringUtils.replacePlaceHolders(p, line)).toList();
+        lines = lines.stream().map(line -> StringUtils.chat(StringUtils.replacePlaceHolders(p, line))).toList();
         board.updateLines(lines);
     }
 }

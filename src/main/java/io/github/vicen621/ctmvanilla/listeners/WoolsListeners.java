@@ -36,6 +36,9 @@ public class WoolsListeners implements Listener {
                 item == null || item.getType() == Material.AIR)
             return;
 
+        if (!gameManager.isPlaying(p))
+            return;
+
         if (!woolManager.isWoolMaterial(item.getType()))
             return;
 
@@ -55,6 +58,9 @@ public class WoolsListeners implements Listener {
 
             if (gameManager.getGameState() != GameManager.GameState.PLAYING ||
                     item.getType() == Material.AIR)
+                return;
+
+            if (!gameManager.isPlaying(p))
                 return;
 
             if (!woolManager.isWoolMaterial(item.getType()))

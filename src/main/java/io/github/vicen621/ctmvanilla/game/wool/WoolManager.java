@@ -32,7 +32,7 @@ public class WoolManager {
         obtainedMinerals = 0;
     }
 
-    public void registerWools(GameManager.GameMode mode) {
+    public void registerWools(GameManager.GameMode mode, boolean minerals) {
         wools.clear();
         materials.clear();
 
@@ -41,6 +41,9 @@ public class WoolManager {
             case HARD -> wools.addAll(Arrays.stream(Wool.HardWools.HARD_WOOLS).toList());
             case NIGHTMARE -> {/*TODO*/}
         }
+
+        if (minerals)
+            wools.addAll(Arrays.stream(Wool.Minerals.MINERALS).toList());
 
         materials.addAll(wools.stream().map(Wool::getMaterial).toList());
     }
@@ -83,6 +86,10 @@ public class WoolManager {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + (wool.isMineral() ? "" : " item")), StringUtils.chat("&6Obtained by " + player.getName()));
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
+        }
+
+        if (getObtainedWools() + getObtainedMinerals() == getWools().size()) {
+            plugin.getGameManager().won();
         }
     }
 }

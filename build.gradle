@@ -60,12 +60,13 @@ dependencies {
     // using using paper-api
     compileOnly paper(mcVersion)
 
-    implementation 'com.github.Exlll.ConfigLib:configlib-paper:v4.2.0'
     implementation 'io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7'
+    compileOnly 'org.apache.commons:commons-lang3:3.12.0'
     compileOnly 'me.clip:placeholderapi:2.11.2'
 
     shadow "co.aikar:acf-paper:0.5.1-SNAPSHOT"
     shadow "fr.mrmicky:fastboard:1.2.1"
+    shadow 'com.github.Exlll.ConfigLib:configlib-paper:v4.2.0'
 }
 
 shadowJar {

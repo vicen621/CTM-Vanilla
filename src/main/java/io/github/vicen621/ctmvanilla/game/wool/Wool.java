@@ -21,7 +21,7 @@ public class Wool {
     public Wool(Material material, String name, boolean mineral) {
         this.material = material;
         this.name = name;
-        this.mineral = false;
+        this.mineral = mineral;
         this.taken = false;
     }
 
@@ -78,6 +78,7 @@ public class Wool {
     @UtilityClass
     public static class Minerals {
         private final Wool COAL_BLOCK = new Wool(Material.COAL_BLOCK, "Block of Coal", true);
+        private final Wool COPPER_BLOCK = new Wool(Material.COPPER_BLOCK, "Block of Copper", true);
         private final Wool IRON_BLOCK = new Wool(Material.IRON_BLOCK, "Block of Iron", true);
         private final Wool GOLD_BLOCK = new Wool(Material.GOLD_BLOCK, "Block of Gold", true);
         private final Wool LAPIS_BLOCK = new Wool(Material.LAPIS_BLOCK, "Block of Lapis", true);

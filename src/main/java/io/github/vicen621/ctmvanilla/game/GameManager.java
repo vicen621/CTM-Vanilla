@@ -3,7 +3,6 @@ package io.github.vicen621.ctmvanilla.game;
 import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.Utils.Utils;
-import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.timer.TimerManager;
 import io.github.vicen621.ctmvanilla.game.wool.Wool;
 import lombok.Getter;
@@ -42,9 +41,10 @@ public class GameManager {
     }
 
     public void startGame(GameMode gameMode) {
-        StringUtils.broadcast("The game has started. Game mode: &b" + this.gameMode.toString());
+        StringUtils.broadcast("The game has started. Game mode: &b" + WordUtils.capitalizeFully(this.gameMode.name()));
         setGameMode(gameMode);
         this.timer = new TimerManager(plugin, this.getGameMode().time);
+        this.timer.startTimer();
         getPlaying().addAll(Bukkit.getOnlinePlayers().stream()
                 .filter(p -> p.getGameMode() == org.bukkit.GameMode.SURVIVAL)
                 .map(Player::getUniqueId)
@@ -67,34 +67,22 @@ public class GameManager {
 
     public void setGameMode(GameMode mode) {
         this.gameMode = mode;
-        plugin.getWoolManager().registerWools(mode);
+        plugin.getWoolManager().registerWools(gameMode, isMinerals());
     }
 
     public void toggleMinerals() {
-        Set<Wool> wools = plugin.getWoolManager().getWools();
-        Set<Material> materials = plugin.getWoolManager().getMaterials();
-
         setMinerals(!isMinerals());
-
-        if (isMinerals()) {
-            wools.addAll(Arrays.stream(Wool.Minerals.MINERALS).toList());
-            materials.addAll(Arrays.stream(Wool.Minerals.MINERALS).map(Wool::getMaterial).toList());
-            return;
-        }
-
-        Arrays.stream(Wool.Minerals.MINERALS).toList().forEach(wools::remove);
-        Arrays.stream(Wool.Minerals.MINERALS).map(Wool::getMaterial).toList().forEach(materials::remove);
         StringUtils.broadcast("Minerals Mode has been " + (plugin.getGameManager().isMinerals() ? "&aenabled" : "&cdisabled"));
     }
 
     public void toggleUHC() {
         setUhc(!isUhc());
-        StringUtils.broadcast("UHC Mode has been " + (plugin.getGameManager().isMinerals() ? "&aenabled" : "&cdisabled"));
+        StringUtils.broadcast("UHC Mode has been " + (plugin.getGameManager().isUhc() ? "&aenabled" : "&cdisabled"));
     }
 
     public void toggleRewards() {
         setRewards(!isRewards());
-        StringUtils.broadcast("Rewards Mode has been " + (plugin.getGameManager().isMinerals() ? "&aenabled" : "&cdisabled"));
+        StringUtils.broadcast("Rewards Mode has been " + (plugin.getGameManager().isRewards() ? "&aenabled" : "&cdisabled"));
     }
 
     public boolean isPlaying(OfflinePlayer p) {
@@ -113,7 +101,7 @@ public class GameManager {
     public void won() {
         setGameState(GameState.WON);
         for (Player p : Bukkit.getOnlinePlayers())
-            p.sendTitle(StringUtils.chat("&a&lYOU WON!!"), StringUtils.chat("&bCongratulations, you completed the monument"));
+            p.sendTitle(StringUtils.chat("&6VICTORY!"), StringUtils.chat("&fCongratulations everyone"));
 
         new BukkitRunnable() {
             int i = 0;
@@ -126,7 +114,7 @@ public class GameManager {
                 Utils.spawnFirework();
                 i++;
             }
-        }.runTaskTimerAsynchronously(plugin, 0, 10);
+        }.runTaskTimer(plugin, 0, 10);
     }
 
     public enum GameState {
@@ -145,11 +133,6 @@ public class GameManager {
 
         GameMode(int time) {
             this.time = time;
-        }
-
-        @Override
-        public String toString() {
-            return WordUtils.capitalizeFully(name());
         }
     }
 }

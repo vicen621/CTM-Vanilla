@@ -16,24 +16,24 @@ public class Config {
     private ScoreboardConfig scoreboard = new ScoreboardConfig(
             "&6&lCTM Vanilla",
             List.of(
-                    "  &a%gamemode%  ",
-                    " ",
-                    "  &bObtained wools  ",
-                    "  %obtained_wools% / 16  ",
-                    " ",
-                    "  &cTime  ",
-                    "  %time_Played%  ",
-                    " ",
-                    "  &dDeaths&f: %total_deaths%  ",
-                    " "
-            ),
-            List.of(
                     " ",
                     "  &cWaiting...  ",
                     " ",
                     " ",
                     "  &bArgentina Time  ",
-                    "  %Current_Time%  ",
+                    "  %localtime_timezone_America/Argentina/Buenos_Aires,HH:mm:ss%  ",
+                    " "
+            ),
+            List.of(
+                    "  &aGamemode&f: %ctmv_gamemode%  ",
+                    " ",
+                    "  &bObtained wools  ",
+                    "  %ctmv_obtained_wools% / 16  ",
+                    " ",
+                    "  &cTime  ",
+                    "  %ctmv_time_played%  ",
+                    " ",
+                    "  &dDeaths&f: %ctmv_total_deaths%  ",
                     " "
             ),
             List.of(

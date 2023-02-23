@@ -10,7 +10,6 @@ import fr.mrmicky.fastboard.FastBoard;
 import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.commands.CTMVanillaCommand;
-import io.github.vicen621.ctmvanilla.commands.Start;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.game.wool.WoolManager;
@@ -27,6 +26,7 @@ import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.io.File;
@@ -60,10 +60,9 @@ public final class Main extends JavaPlugin {
         loadConfigFile();
         loadManagers();
         loadHooks();
+        commands();
         loadListeners();
         scoreboards();
-
-        new Start(this);
 
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             for (FastBoard board : boards.values()) {
@@ -123,6 +122,7 @@ public final class Main extends JavaPlugin {
         gameManager = new GameManager(this);
         woolManager = new WoolManager(this);
         invManager = new InventoryManager(this);
+        invManager.invoke();
     }
 
     private void loadHooks() {
@@ -163,9 +163,11 @@ public final class Main extends JavaPlugin {
             Objective objective = scoreboard.registerNewObjective("hp", "health", StringUtils.chat("&c❤"));
             objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
         }
+
         if (scoreboard.getObjective("vida") == null) {
-            Objective objective1 = scoreboard.registerNewObjective("vida", "health");
-            objective1.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+            Objective objective = scoreboard.registerNewObjective("vida", "health");
+            objective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+            objective.setRenderType(RenderType.HEARTS);
         }
     }
 }

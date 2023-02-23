@@ -42,4 +42,12 @@ public class TimerManager {
     public String getCurrentTimeFormatted() {
         return StringUtils.formatTime(getCurrentTime());
     }
+
+    public int getRemainingTime() {
+        return timer.getTotalTime() - timer.getCurrentTime();
+    }
+
+    public String getRemainingTimeFormatted() {
+        return StringUtils.formatTime(getRemainingTime());
+    }
 }

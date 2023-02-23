@@ -12,17 +12,17 @@ import java.util.regex.Pattern;
 
 @UtilityClass
 public class StringUtils {
-    private final Pattern PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
     public static String PREFIX = "&#313535[&#0c768bCTM Vanilla&#313535] &#4b5061» &7";
 
-    public String chat(String s) {
-        if (Bukkit.getVersion().contains("1.16") || Bukkit.getVersion().contains("1.17")) {
-            s = s.replace("&#", "#").replace("&k", "");
-            Matcher match = PATTERN.matcher(s);
+    public static String chat(String s) {
+        Pattern pattern = Pattern.compile("(#|&#)([A-Fa-f0-9]{6})");
+        s = s.replace("&k", "&r");
+        if (Integer.parseInt(Bukkit.getVersion().split("\\.")[1]) >= 16) {
+            Matcher match = pattern.matcher(s);
             while (match.find()) {
                 String color = s.substring(match.start(), match.end());
-                s = s.replace(color, net.md_5.bungee.api.ChatColor.of(color) + "");
-                match = PATTERN.matcher(s);
+                s = s.replace(color, net.md_5.bungee.api.ChatColor.of(color.replace("&#", "#")) + "");
+                match = pattern.matcher(s);
             }
         }
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -48,15 +48,17 @@ public class StringUtils {
         int minutes = (remainder / 60) - (hours * 60);
         int seconds = (remainder % 3600) - (minutes * 60);
 
-        if (days > 0) {
-            return days + " " + hours + ":" + minutes + ":" + seconds;
-        } else if (hours > 0) {
-            return hours + ":" + minutes + ":" + seconds;
-        } else if (minutes > 0) {
-            return minutes + ":" + seconds;
-        } else {
-            return String.valueOf(seconds);
-        }
+        String dayy = (days < 10 ? "0" : "") + days;
+        String horr = (hours < 10 ? "0" : "") + hours;
+        String minn = (minutes < 10 ? "0" : "") + minutes;
+        String secc = (seconds < 10 ? "0" : "") + seconds;
+
+        if (days > 0)
+            return dayy + " " + horr + ":" + minn + ":" + secc;
+        else if (hours > 0)
+            return horr + ":" + minn + ":" + secc;
+        else
+            return minn + ":" + secc;
     }
 
     public String replacePlaceHolders(Player p, String s) {
