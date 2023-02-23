@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListeners implements Listener {
     private final GameManager gameManager;
@@ -30,8 +31,15 @@ public class PlayerListeners implements Listener {
         board.updateTitle(StringUtils.chat(config.getScoreboard().title()));
         Main.boards.put(p.getName(), board);
 
+        e.setJoinMessage(StringUtils.chat("&b» &7" + e.getPlayer().getName()));
+
         if (gameManager.getGameState() == GameManager.GameState.WAITING)
             p.setStatistic(Statistic.DEATHS, 0);
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        e.setQuitMessage(StringUtils.chat("&c« &7" + e.getPlayer().getName()));
     }
 
     @EventHandler

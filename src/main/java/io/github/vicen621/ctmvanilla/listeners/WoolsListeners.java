@@ -44,7 +44,7 @@ public class WoolsListeners implements Listener {
         if (wool == null || wool.isTaken())
             return;
 
-        woolManager.woolObtained(wool, p.getDisplayName(), gameManager.getTimer().getCurrentTimeFormatted());
+        woolManager.woolObtained(wool, p, gameManager.getTimer().getCurrentTimeFormatted());
     }
 
     @EventHandler
@@ -65,7 +65,7 @@ public class WoolsListeners implements Listener {
             if (wool == null || wool.isTaken())
                 return;
 
-            woolManager.woolObtained(wool, p.getDisplayName(), gameManager.getTimer().getCurrentTimeFormatted());
+            woolManager.woolObtained(wool, p, gameManager.getTimer().getCurrentTimeFormatted());
         }
     }
 }

@@ -28,6 +28,14 @@ public class StringUtils {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
+    public void broadcast(String message) {
+        broadcast(PREFIX, message);
+    }
+
+    public void broadcast(String prefix, String message) {
+        Bukkit.broadcastMessage(chat(prefix + message));
+    }
+
     public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(chat(PREFIX + message));
     }

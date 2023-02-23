@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ public class WoolManager {
         wools = new HashSet<>();
         materials = new HashSet<>();
         obtainedWools = 0;
+        obtainedMinerals = 0;
     }
 
     public void registerWools(GameManager.GameMode mode) {
@@ -43,15 +45,11 @@ public class WoolManager {
         materials.addAll(wools.stream().map(Wool::getMaterial).toList());
     }
 
-    public void toggleMinerals(boolean toggle) {
-        if (toggle) {
-            wools.addAll(Arrays.stream(Wool.Minerals.MINERALS).toList());
-            materials.addAll(Arrays.stream(Wool.Minerals.MINERALS).map(Wool::getMaterial).toList());
-            return;
-        }
-
-        Arrays.stream(Wool.Minerals.MINERALS).toList().forEach(wools::remove);
-        Arrays.stream(Wool.Minerals.MINERALS).map(Wool::getMaterial).toList().forEach(materials::remove);
+    public void resetWools() {
+        wools.clear();
+        materials.clear();
+        obtainedWools = 0;
+        obtainedMinerals = 0;
     }
 
     public boolean isWoolMaterial(Material mat) {
@@ -66,7 +64,7 @@ public class WoolManager {
         return wools.stream().filter(wool -> wool.getName().equalsIgnoreCase(color)).findFirst();
     }
 
-    public void woolObtained(Wool wool, String player, String currentTime) {
+    public void woolObtained(Wool wool, Player player, String currentTime) {
         if (wool.isTaken())
             return;
 
@@ -77,10 +75,13 @@ public class WoolManager {
         else
             obtainedWools++;
 
-        Bukkit.broadcastMessage("&6" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
+        if (plugin.getGameManager().isRewards())
+            player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
+
+        StringUtils.broadcast("", "&6" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + (wool.isMineral() ? "" : " item")), StringUtils.chat("&6Obtained by " + player));
+            p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + (wool.isMineral() ? "" : " item")), StringUtils.chat("&6Obtained by " + player.getName()));
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
         }
     }

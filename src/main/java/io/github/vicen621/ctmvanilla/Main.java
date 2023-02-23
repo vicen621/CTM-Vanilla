@@ -1,14 +1,16 @@
 package io.github.vicen621.ctmvanilla;
 
+import co.aikar.commands.MessageType;
+import co.aikar.commands.PaperCommandManager;
 import de.exlll.configlib.ConfigLib;
 import de.exlll.configlib.NameFormatters;
 import de.exlll.configlib.YamlConfigurationProperties;
 import de.exlll.configlib.YamlConfigurationStore;
 import fr.mrmicky.fastboard.FastBoard;
+import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
-import io.github.vicen621.ctmvanilla.commands.Guides;
+import io.github.vicen621.ctmvanilla.commands.CTMVanillaCommand;
 import io.github.vicen621.ctmvanilla.commands.Start;
-import io.github.vicen621.ctmvanilla.commands.tl;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.game.wool.WoolManager;
@@ -20,6 +22,7 @@ import io.github.vicen621.ctmvanilla.scoreboard.Scoreboard;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -36,7 +39,6 @@ import java.util.Map;
  * All rights reserved.
  */
 
-//TODO Hacer thread de timer
 @Getter
 public final class Main extends JavaPlugin {
 
@@ -48,6 +50,8 @@ public final class Main extends JavaPlugin {
     private Config configuration;
     private GameManager gameManager;
     private WoolManager woolManager;
+    private PaperCommandManager cmdManager;
+    private InventoryManager invManager;
 
     @Override
     public void onEnable() {
@@ -59,9 +63,7 @@ public final class Main extends JavaPlugin {
         loadListeners();
         scoreboards();
 
-        new Guides(this);
         new Start(this);
-        new tl(this);
 
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             for (FastBoard board : boards.values()) {
@@ -74,12 +76,7 @@ public final class Main extends JavaPlugin {
             //  para fijarse si pierden que sea cuando el timer llegue a x tiempo, fijarse en el thread del timer
             /*if (started) {
                 if (NormalMode && Start.timer.equals(config.getConfig().getString("GameConfig.MaxGameTimeNormalMode"))) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendTitle(StringUtils.chat("&4&lPERDIERON"), StringUtils.chat("&cExcedieron el tiempo limite"));
-                        p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_DEATH, 10.0F, 1.0F);
-                        started = Boolean.FALSE;
-                        lose = Boolean.TRUE;
-                    }
+
                 } else if (HardMode && Start.timer.equals(config.getConfig().getString("GameConfig.MaxGameTimeHardMode"))) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.sendTitle(StringUtils.chat("&4&lPERDIERON"), StringUtils.chat("&cExcedieron el tiempo limite"));
@@ -90,41 +87,7 @@ public final class Main extends JavaPlugin {
                 }
 
                 if (WoolsListeners.getObtainedWools() == 16 && WoolsListeners.getObtainedMinerals() == 7) {
-                        started = Boolean.FALSE;
-                        won = Boolean.TRUE;
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.sendTitle(StringUtils.chat("&a&lYOU WON!!"), StringUtils.chat("&bCongratulations, you completed the monument"));
-                            Firework fw = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
-                            FireworkMeta fwm = fw.getFireworkMeta();
 
-                            //Our random generator
-                            Random r = new Random();
-
-                            //Get the type
-                            int rt = r.nextInt(5) + 1;
-                            FireworkEffect.Type type = FireworkEffect.Type.BALL;
-                            if (rt == 1) type = FireworkEffect.Type.BALL;
-                            if (rt == 2) type = FireworkEffect.Type.BALL_LARGE;
-                            if (rt == 3) type = FireworkEffect.Type.BURST;
-                            if (rt == 4) type = FireworkEffect.Type.CREEPER;
-                            if (rt == 5) type = FireworkEffect.Type.STAR;
-
-                            //Create our effect with this
-                            FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean())
-                                    .withColor(Utils.getRandomColor()).withFade(Utils.getRandomColor()).with(type)
-                                    .trail(r.nextBoolean()).build();
-
-                            //Then apply the effect to the meta
-                            fwm.addEffect(effect);
-
-                            //Generate some random power and set it
-                            int rp = r.nextInt(2) + 1;
-                            fwm.setPower(rp);
-
-                            //Then apply this to our rocket
-                            fw.setFireworkMeta(fwm);
-                        }
-                    }
             }*/
         }, 0L, 5L);
     }
@@ -159,6 +122,7 @@ public final class Main extends JavaPlugin {
     private void loadManagers() {
         gameManager = new GameManager(this);
         woolManager = new WoolManager(this);
+        invManager = new InventoryManager(this);
     }
 
     private void loadHooks() {
@@ -175,6 +139,20 @@ public final class Main extends JavaPlugin {
     public void updateConfig() {
         Path configFile = new File(getDataFolder(), "config.yml").toPath();
         configuration = configStore.update(configFile);
+    }
+
+    private void commands() {
+        cmdManager = new PaperCommandManager(getInstance());
+        cmdManager.enableUnstableAPI("help");
+
+        cmdManager.registerDependency(GameManager.class, this.getGameManager());
+        cmdManager.registerDependency(WoolManager.class, this.getWoolManager());
+
+        cmdManager.setFormat(MessageType.HELP, ChatColor.DARK_AQUA, ChatColor.AQUA, ChatColor.GRAY, ChatColor.DARK_GRAY);
+        cmdManager.setFormat(MessageType.INFO, ChatColor.DARK_AQUA, ChatColor.AQUA, ChatColor.GRAY, ChatColor.DARK_GRAY);
+        cmdManager.setFormat(MessageType.SYNTAX, ChatColor.DARK_AQUA, ChatColor.AQUA, ChatColor.GRAY, ChatColor.DARK_GRAY);
+
+        cmdManager.registerCommand(new CTMVanillaCommand());
     }
 
     private void scoreboards() {

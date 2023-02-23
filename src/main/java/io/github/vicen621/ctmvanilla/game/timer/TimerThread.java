@@ -7,22 +7,23 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 
 @Getter
+@Setter
 public class TimerThread implements Runnable {
 
     private final Main plugin;
     private final GameManager gameManager;
 
     private final int totalTime;
-    @Setter
     private int currentTime;
-
-    @Setter
     private boolean stopped;
 
+    /**
+     * @param totalTime total time in seconds
+     */
     public TimerThread(Main plugin, int totalTime) {
         this.plugin = plugin;
         this.gameManager = plugin.getGameManager();
-        this.totalTime = totalTime;
+        this.totalTime = totalTime * 60;
         this.currentTime = 0;
         this.stopped = false;
     }
@@ -35,7 +36,7 @@ public class TimerThread implements Runnable {
         currentTime++;
 
         if (currentTime >= totalTime)
-            gameManager.setGameState(GameManager.GameState.LOSE);
+            gameManager.lose();
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, 20);
     }

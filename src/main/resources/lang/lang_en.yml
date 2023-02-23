@@ -1,0 +1,30 @@
+scoreboards:
+  playing_board:
+    - "  &a%gamemode%  "
+    - " "
+    - "  &bObtained wools  "
+    - "  %obtained_wools% / 16  "
+    - " "
+    - "  &cTime  "
+    - "  %time_Played%  "
+    - " "
+    - "  &dDeaths&f: %total_deaths%  "
+    - " "
+  waiting_board: # Scoreboard that shown when you are waiting
+    - " "
+    - "  &cWaiting...  "
+    - " "
+    - " "
+    - "  &bArgentina Time  "
+    - "  %Current_Time%  "
+    - " "
+  lose_board: # Scoreboard that shown when you lose the game
+    - " "
+    - "  &cYou Lose  "
+    - "  &cYou exceeded the time limit  "
+    - " "
+  won_board: #Scorebard that shown when toy won the game
+    - " "
+    - "  &aYOU WON!  "
+    - "  &bYou completed the monument  "
+    - " "

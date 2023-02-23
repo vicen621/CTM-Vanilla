@@ -26,10 +26,13 @@ public class TimerManager {
             this.timer.setStopped(true);
     }
 
-    public void restartTimer() {
+    public void resetTimer() {
         stopTimer();
         this.timer.setCurrentTime(0);
-        startTimer();
+    }
+
+    public void setTime(int seconds) {
+        this.timer.setCurrentTime(seconds);
     }
 
     public int getCurrentTime() {

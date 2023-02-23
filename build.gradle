@@ -51,8 +51,9 @@ repositories {
     mavenCentral()
     paper()
     jitpack()
-    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
-    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url "https://s01.oss.sonatype.org/content/groups/public/" }
 }
 
 dependencies {
@@ -60,6 +61,7 @@ dependencies {
     compileOnly paper(mcVersion)
 
     implementation 'com.github.Exlll.ConfigLib:configlib-paper:v4.2.0'
+    implementation 'io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7'
     compileOnly 'me.clip:placeholderapi:2.11.2'
 
     shadow "co.aikar:acf-paper:0.5.1-SNAPSHOT"
@@ -69,9 +71,9 @@ dependencies {
 shadowJar {
     archiveClassifier.set('')
     configurations = [project.configurations.runtimeClasspath, project.configurations.shadow]
-    relocate 'co.aikar.commands', "${packageName}.acf"
-    relocate 'co.aikar.locales', "${packageName}.locales"
-    relocate "fr.mrmicky.fastboard", "${packageName}.fastboard"
+    relocate 'co.aikar.commands', "${packageName}.libs.acf"
+    relocate 'co.aikar.locales', "${packageName}.libs.locales"
+    relocate "fr.mrmicky.fastboard", "${packageName}.libs.fastboard"
 }
 
 tasks.build.dependsOn(shadowJar)
