@@ -44,7 +44,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: 🔨 Build artifacts
-        run: ./gradlew wG:shadowJar wL:shadowJar
+        run: ./gradlew build
 
       - name: 📦 Upload artifacts
         uses: actions/upload-artifact@v3
