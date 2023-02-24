@@ -7,12 +7,11 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Statistic;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PlaceHolderAPIHook extends PlaceholderExpansion {
     private final Main plugin;
@@ -44,12 +43,12 @@ public class PlaceHolderAPIHook extends PlaceholderExpansion {
 
     @Override
     public @NotNull List<String> getPlaceholders() {
-        return List.of("ctmv_gamemode", "ctmv_obtained_wools", "ctmv_remaining_time", "ctmv_obtained_minerals","ctmv_time_played", "ctmv_total_deaths", "ctm_wool,{wool_material}");
+        return List.of("ctmv_gamemode", "ctmv_obtained_wools", "ctmv_remaining_time", "ctmv_obtained_minerals","ctmv_time_played", "ctmv_total_deaths", "ctmv_wool,{wool_material}");
     }
 
     @Override
-    public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        switch (params) {
+    public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
+        switch (params.toLowerCase(Locale.ENGLISH)) {
             case "gamemode" -> {
                 return WordUtils.capitalizeFully(plugin.getGameManager().getGameMode().toString());
             }
