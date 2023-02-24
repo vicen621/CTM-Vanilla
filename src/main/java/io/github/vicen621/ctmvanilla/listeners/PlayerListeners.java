@@ -5,11 +5,16 @@ import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
+import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -49,4 +54,41 @@ public class PlayerListeners implements Listener {
         if (gameManager.isUhc())
             p.setGameMode(GameMode.SPECTATOR);
     }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if (gameManager.getGameState() == GameManager.GameState.PLAYING)
+            return;
+
+        if (e.getEntity() instanceof Player)
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent e) {
+        if (gameManager.getGameState() == GameManager.GameState.PLAYING)
+            return;
+
+        if (e.getDamager() instanceof Player)
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamage(FoodLevelChangeEvent e) {
+        if (gameManager.getGameState() == GameManager.GameState.PLAYING)
+            return;
+
+        if (e.getEntity() instanceof Player)
+            e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamage(BlockBreakEvent e) {
+        if (gameManager.getGameState() == GameManager.GameState.PLAYING)
+            return;
+
+        if (e.getPlayer().getGameMode() == GameMode.SURVIVAL)
+            e.setCancelled(true);
+    }
+
 }
