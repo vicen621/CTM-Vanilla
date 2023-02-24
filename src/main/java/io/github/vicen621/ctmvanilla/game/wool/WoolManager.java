@@ -73,10 +73,11 @@ public class WoolManager {
 
         wool.setTaken(true);
 
-        if (wool.isMineral())
+        if (wool.isMineral()) {
             obtainedMinerals++;
-        else
+        } else {
             obtainedWools++;
+        }
 
         if (plugin.getGameManager().isRewards())
             player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
