@@ -45,11 +45,21 @@ public class GameManager {
         setGameMode(gameMode);
         this.timer = new TimerManager(plugin, this.getGameMode().time);
         this.timer.startTimer();
-        getPlaying().addAll(Bukkit.getOnlinePlayers().stream()
+        getPlaying().addAll(
+                Bukkit.getOnlinePlayers().stream()
                 .filter(p -> p.getGameMode() == org.bukkit.GameMode.SURVIVAL)
                 .map(Player::getUniqueId)
                 .toList()
         );
+
+        getPlaying().stream()
+                .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull).forEach(p -> {
+                    p.setStatistic(Statistic.DEATHS, 0);
+                    p.setFoodLevel(20);
+                    p.setSaturation(100);
+                    p.setHealth(p.getMaxHealth());
+                });
 
         setGameState(GameState.PLAYING);
     }
