@@ -29,11 +29,18 @@ public class WoolsListeners implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        ItemStack item = e.getCurrentItem();
-        Player p = (Player) e.getWhoClicked();
+        if (e.getWhoClicked() instanceof Player p)
+            consumeEvent(p, e.getCurrentItem());
+    }
 
-        if (gameManager.getGameState() != GameManager.GameState.PLAYING ||
-                item == null || item.getType() == Material.AIR)
+    @EventHandler
+    public void onPickUp(EntityPickupItemEvent e) {
+        if (e.getEntity() instanceof Player p)
+            consumeEvent(p, e.getItem().getItemStack());
+    }
+
+    public void consumeEvent(Player p, ItemStack item) {
+        if (gameManager.getGameState() != GameManager.GameState.PLAYING || item.getType() == Material.AIR)
             return;
 
         if (!gameManager.isPlaying(p))
@@ -48,30 +55,5 @@ public class WoolsListeners implements Listener {
             return;
 
         woolManager.woolObtained(wool, p, gameManager.getTimer().getCurrentTimeFormatted());
-    }
-
-    @EventHandler
-    public void onPickUp(EntityPickupItemEvent e) {
-        if (e.getEntity() instanceof Player p) {
-            Item PickItem = e.getItem();
-            ItemStack item = PickItem.getItemStack();
-
-            if (gameManager.getGameState() != GameManager.GameState.PLAYING ||
-                    item.getType() == Material.AIR)
-                return;
-
-            if (!gameManager.isPlaying(p))
-                return;
-
-            if (!woolManager.isWoolMaterial(item.getType()))
-                return;
-
-            Wool wool = woolManager.getWoolByMaterial(item.getType()).orElse(null);
-
-            if (wool == null || wool.isTaken())
-                return;
-
-            woolManager.woolObtained(wool, p, gameManager.getTimer().getCurrentTimeFormatted());
-        }
     }
 }

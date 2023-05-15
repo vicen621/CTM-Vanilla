@@ -68,16 +68,12 @@ public class WoolManager {
     }
 
     public void woolObtained(Wool wool, Player player, String currentTime) {
-        if (wool.isTaken())
-            return;
-
         wool.setTaken(true);
 
-        if (wool.isMineral()) {
+        if (wool.isMineral())
             obtainedMinerals++;
-        } else {
+        else
             obtainedWools++;
-        }
 
         if (plugin.getGameManager().isRewards())
             player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
@@ -89,8 +85,7 @@ public class WoolManager {
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
         }
 
-        if (getObtainedWools() + getObtainedMinerals() == getWools().size()) {
+        if (getObtainedWools() + getObtainedMinerals() == getWools().size())
             plugin.getGameManager().won();
-        }
     }
 }
