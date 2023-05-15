@@ -65,29 +65,8 @@ public final class Main extends JavaPlugin {
         scoreboards();
 
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
-            for (FastBoard board : boards.values()) {
-                // board.updateTitle(StringUtils.chat(configuration.getScoreboard().title()));
+            for (FastBoard board : boards.values())
                 Scoreboard.update(board);
-            }
-
-            // TODO Fijarse si hay alguna manera mas eficiente de fijarse si ganaron,
-            //  se puede hacer que cuando se agarra una lana, si es la ultima se ejecute
-            //  para fijarse si pierden que sea cuando el timer llegue a x tiempo, fijarse en el thread del timer
-            /*if (started) {
-                if (NormalMode && Start.timer.equals(config.getConfig().getString("GameConfig.MaxGameTimeNormalMode"))) {
-
-                } else if (HardMode && Start.timer.equals(config.getConfig().getString("GameConfig.MaxGameTimeHardMode"))) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendTitle(StringUtils.chat("&4&lPERDIERON"), StringUtils.chat("&cExcedieron el tiempo limite"));
-                        p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_DEATH, 10.0F, 1.0F);
-                        started = Boolean.FALSE;
-                        lose = Boolean.TRUE;
-                    }
-                }
-
-                if (WoolsListeners.getObtainedWools() == 16 && WoolsListeners.getObtainedMinerals() == 7) {
-
-            }*/
         }, 0L, 5L);
     }
 
