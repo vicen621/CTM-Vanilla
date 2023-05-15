@@ -73,18 +73,21 @@ public class Config {
 
             @Comment({"", "Scorebard that shown when you won the game"})
             List<String> wonBoard
-    ) { }
+    ) {
+    }
 
     public record GameConfig(
             int maxGameTimeNormalMode,
             int maxGameTimeHardMode
-    ) { }
+    ) {
+    }
 
     public record WorldsConfig(
             World overworld,
             World nether,
             World theEnd
-    ) { }
+    ) {
+    }
 
     public static class WorldToStringSerializer implements Serializer<World, String> {
 

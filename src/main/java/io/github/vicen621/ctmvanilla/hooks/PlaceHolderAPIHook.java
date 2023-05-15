@@ -43,7 +43,7 @@ public class PlaceHolderAPIHook extends PlaceholderExpansion {
 
     @Override
     public @NotNull List<String> getPlaceholders() {
-        return List.of("ctmv_gamemode", "ctmv_obtained_wools", "ctmv_remaining_time", "ctmv_obtained_minerals","ctmv_time_played", "ctmv_total_deaths", "ctmv_wool,{wool_material}");
+        return List.of("ctmv_gamemode", "ctmv_obtained_wools", "ctmv_remaining_time", "ctmv_obtained_minerals", "ctmv_time_played", "ctmv_total_deaths", "ctmv_wool,{wool_material}");
     }
 
     @Override

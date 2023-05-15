@@ -21,7 +21,7 @@ public class StringUtils {
             Matcher match = pattern.matcher(s);
             while (match.find()) {
                 String color = s.substring(match.start(), match.end());
-                s = s.replace(color, net.md_5.bungee.api.ChatColor.of(color.replace("&#", "#")) + "");
+                s = s.replace(color, String.valueOf(net.md_5.bungee.api.ChatColor.of(color.replace("&#", "#"))));
                 match = pattern.matcher(s);
             }
         }

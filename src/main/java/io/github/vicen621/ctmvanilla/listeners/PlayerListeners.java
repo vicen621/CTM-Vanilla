@@ -5,7 +5,6 @@ import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
-import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;

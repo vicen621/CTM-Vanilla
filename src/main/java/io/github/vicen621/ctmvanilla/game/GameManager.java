@@ -4,15 +4,20 @@ import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.Utils.Utils;
 import io.github.vicen621.ctmvanilla.game.timer.TimerManager;
-import io.github.vicen621.ctmvanilla.game.wool.Wool;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.text.WordUtils;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -47,9 +52,9 @@ public class GameManager {
         this.timer.startTimer();
         getPlaying().addAll(
                 Bukkit.getOnlinePlayers().stream()
-                .filter(p -> p.getGameMode() == org.bukkit.GameMode.SURVIVAL)
-                .map(Player::getUniqueId)
-                .toList()
+                        .filter(p -> p.getGameMode() == org.bukkit.GameMode.SURVIVAL)
+                        .map(Player::getUniqueId)
+                        .toList()
         );
 
         getPlaying().stream()

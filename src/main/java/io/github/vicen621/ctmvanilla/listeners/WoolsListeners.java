@@ -5,7 +5,6 @@ import io.github.vicen621.ctmvanilla.game.GameManager;
 import io.github.vicen621.ctmvanilla.game.wool.Wool;
 import io.github.vicen621.ctmvanilla.game.wool.WoolManager;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
