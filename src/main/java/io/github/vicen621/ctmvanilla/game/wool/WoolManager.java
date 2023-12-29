@@ -82,7 +82,7 @@ public class WoolManager {
         if (plugin.getGameManager().isRewards())
             player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
 
-        StringUtils.broadcast("", "&6" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
+        StringUtils.broadcast("", "<gold>" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
 
         MiniMessage mm = MiniMessage.miniMessage();
 

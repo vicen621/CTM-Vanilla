@@ -52,9 +52,9 @@ public class GameManager {
     }
 
     public void startGame(GameMode gameMode) {
-        StringUtils.broadcast("The game has started. Game mode: <aqua>" + WordUtils.capitalizeFully(this.gameMode.name()));
         setGameMode(gameMode);
-        this.timer = new TimerManager(plugin, this.getGameMode().time);
+        StringUtils.broadcast("The game has started. Game mode: <aqua>" + WordUtils.capitalizeFully(gameMode.name()));
+        this.timer = new TimerManager(plugin, gameMode.time);
         this.timer.startTimer();
         getPlaying().addAll(
                 Bukkit.getOnlinePlayers().stream()
@@ -88,6 +88,7 @@ public class GameManager {
 
     public void setGameMode(GameMode mode) {
         this.gameMode = mode;
+        Bukkit.getLogger().info(mode.name());
         plugin.getWoolManager().registerWools(gameMode, isMinerals());
     }
 

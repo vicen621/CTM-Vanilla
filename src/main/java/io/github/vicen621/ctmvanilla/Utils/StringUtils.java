@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 @UtilityClass
 public class StringUtils {
-    public static String PREFIX = "<#313535>[<#0c768b>CTM Vanilla<#313535>] <#4b5061>» <gray>";
+    public static String PREFIX = "<#313535>[<#0c768b>CTM Vanilla<#313535>] <#4b5061>» ";
 
     public void broadcast(String message) {
         broadcast(PREFIX, message);
@@ -15,7 +15,7 @@ public class StringUtils {
 
     public void broadcast(String prefix, String message) {
         MiniMessage mm = MiniMessage.miniMessage();
-        Bukkit.broadcast(mm.deserialize(prefix).append(mm.deserialize(message)));
+        Bukkit.broadcast(mm.deserialize(prefix).append(mm.deserialize("<gray>" + message)));
     }
 
     public void sendMessage(CommandSender sender, String message) {
