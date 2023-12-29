@@ -10,25 +10,26 @@ import org.bukkit.World;
 
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class ConfigManager<C> {
     private final Main plugin;
     private final YamlConfigurationProperties PROPERTIES = ConfigLib.BUKKIT_DEFAULT_PROPERTIES.toBuilder()
             .header("""
-                                                Plugin made by:
-                         ██╗░░░██╗██╗░█████╗░███████╗███╗░░██╗░█████╗░██████╗░░░███╗░░
-                         ██║░░░██║██║██╔══██╗██╔════╝████╗░██║██╔═══╝░╚════██╗░████║░░
-                         ╚██╗░██╔╝██║██║░░╚═╝█████╗░░██╔██╗██║██████╗░░░███╔═╝██╔██║░░
-                         ░╚████╔╝░██║██║░░██╗██╔══╝░░██║╚████║██╔══██╗██╔══╝░░╚═╝██║░░
-                         ░░╚██╔╝░░██║╚█████╔╝███████╗██║░╚███║╚█████╔╝███████╗███████╗
-                         ░░░╚═╝░░░╚═╝░╚════╝░╚══════╝╚═╝░░╚══╝░╚════╝░╚══════╝╚══════╝
-                                                
-                        You can use any Placeholder API placeholder
-                        Also this plugin adds this placeholders to the Placeholder API plugin:
-                          %ctmv_gamemode%: Shows the current gamemode
-                          %ctmv_obtained_wools%: Displays your currents wools
-                          %ctmv_time_Played%: Displays the time played
-                          %ctmv_total_deaths%: Displays the deaths of all teams
-                        """)
+                                            Plugin made by:
+                     ██╗░░░██╗██╗░█████╗░███████╗███╗░░██╗░█████╗░██████╗░░░███╗░░
+                     ██║░░░██║██║██╔══██╗██╔════╝████╗░██║██╔═══╝░╚════██╗░████║░░
+                     ╚██╗░██╔╝██║██║░░╚═╝█████╗░░██╔██╗██║██████╗░░░███╔═╝██╔██║░░
+                     ░╚████╔╝░██║██║░░██╗██╔══╝░░██║╚████║██╔══██╗██╔══╝░░╚═╝██║░░
+                     ░░╚██╔╝░░██║╚█████╔╝███████╗██║░╚███║╚█████╔╝███████╗███████╗
+                     ░░░╚═╝░░░╚═╝░╚════╝░╚══════╝╚═╝░░╚══╝░╚════╝░╚══════╝╚══════╝
+                                            
+                    You can use any Placeholder API placeholder
+                    Also this plugin adds this placeholders to the Placeholder API plugin:
+                      %ctmv_gamemode%: Shows the current gamemode
+                      %ctmv_obtained_wools%: Displays your currents wools
+                      %ctmv_time_Played%: Displays the time played
+                      %ctmv_total_deaths%: Displays the deaths of all teams
+                    """)
             .setNameFormatter(NameFormatters.LOWER_UNDERSCORE)
             .addSerializer(World.class, new WorldToStringSerializer())
             .build();

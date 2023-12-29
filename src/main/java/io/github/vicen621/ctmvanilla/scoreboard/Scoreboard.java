@@ -33,9 +33,9 @@ public class Scoreboard {
 
         board.updateLines(
                 lines.stream()
-                .map(line -> replacePlaceHolders(p, line))
-                .map(MiniMessage.miniMessage()::deserialize)
-                .toList()
+                        .map(line -> replacePlaceHolders(p, line))
+                        .map(MiniMessage.miniMessage()::deserialize)
+                        .toList()
         );
     }
 

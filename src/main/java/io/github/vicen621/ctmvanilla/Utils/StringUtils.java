@@ -1,7 +1,6 @@
 package io.github.vicen621.ctmvanilla.Utils;
 
 import lombok.experimental.UtilityClass;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

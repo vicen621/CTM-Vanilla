@@ -2,9 +2,7 @@ package io.github.vicen621.ctmvanilla.config;
 
 import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
-import de.exlll.configlib.Serializer;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
