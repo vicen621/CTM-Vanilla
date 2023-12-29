@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/vicen621/CTM-Vanilla/compare/v1.2.0...v1.3.0) (2023-12-29)
+
+
+### Features
+
+* added adventure support ([312621d](https://github.com/vicen621/CTM-Vanilla/commit/312621db091e877a99d1b9e74ee5e4b5711145b7))
+
 ## [1.2.0](https://github.com/vicen621/CTM-Vanilla/compare/v1.1.0...v1.2.0) (2023-05-15)
 
 
