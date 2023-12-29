@@ -4,48 +4,51 @@ import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
 import de.exlll.configlib.Serializer;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import java.util.List;
 
-@Configuration
+
 @Getter
+@Configuration
+@SuppressWarnings("FieldMayBeFinal")
 public class Config {
 
     private ScoreboardConfig scoreboard = new ScoreboardConfig(
-            "&6&lCTM Vanilla",
+            "<gold><bold>CTM Vanilla",
             List.of(
                     " ",
-                    "  &cWaiting...  ",
+                    "  <red>Waiting...  ",
                     " ",
                     " ",
-                    "  &bArgentina Time  ",
+                    "  <aqua>Argentina Time  ",
                     "  %localtime_timezone_America/Argentina/Buenos_Aires,HH:mm:ss%  ",
                     " "
             ),
             List.of(
-                    "  &aGamemode&f: %ctmv_gamemode%  ",
+                    "  <green>Gamemode<white>: %ctmv_gamemode%  ",
                     " ",
-                    "  &bObtained wools  ",
+                    "  <aqua>Obtained wools  ",
                     "  %ctmv_obtained_wools% / 16  ",
                     " ",
-                    "  &cTime  ",
+                    "  <red>Time  ",
                     "  %ctmv_time_played%  ",
                     " ",
-                    "  &dDeaths&f: %ctmv_total_deaths%  ",
+                    "  <light_purple>Deaths<white>: %ctmv_total_deaths%  ",
                     " "
             ),
             List.of(
                     " ",
-                    "  &cYou Lose  ",
-                    "  &cYou exceeded the time limit  ",
+                    "  <red>You Lose  ",
+                    "  <red>You exceeded the time limit  ",
                     " "
             ),
             List.of(
                     " ",
-                    "  &aYOU WON!  ",
-                    "  &bYou completed the monument  ",
+                    "  <green>YOU WON!  ",
+                    "  <aqua>You completed the monument  ",
                     " "
             )
     );
@@ -87,18 +90,5 @@ public class Config {
             World nether,
             World theEnd
     ) {
-    }
-
-    public static class WorldToStringSerializer implements Serializer<World, String> {
-
-        @Override
-        public String serialize(World element) {
-            return element.getName();
-        }
-
-        @Override
-        public World deserialize(String element) {
-            return Bukkit.getWorld(element);
-        }
     }
 }

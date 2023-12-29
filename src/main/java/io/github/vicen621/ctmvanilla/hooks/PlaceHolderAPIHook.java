@@ -1,7 +1,6 @@
 package io.github.vicen621.ctmvanilla.hooks;
 
 import io.github.vicen621.ctmvanilla.Main;
-import io.github.vicen621.ctmvanilla.Utils.Utils;
 import io.github.vicen621.ctmvanilla.game.wool.Wool;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang3.text.WordUtils;
@@ -13,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Locale;
 
+@SuppressWarnings("deprecation")
 public class PlaceHolderAPIHook extends PlaceholderExpansion {
     private final Main plugin;
 
@@ -65,7 +65,7 @@ public class PlaceHolderAPIHook extends PlaceholderExpansion {
                 return plugin.getGameManager().getTimer().getRemainingTimeFormatted();
             }
             case "total_deaths" -> {
-                return String.valueOf(Utils.getTotalDeaths());
+                return String.valueOf(plugin.getGameManager().getDeaths());
             }
         }
 
@@ -85,6 +85,6 @@ public class PlaceHolderAPIHook extends PlaceholderExpansion {
     }
 
     public String getBoolean(boolean bool) {
-        return bool ? "&a✓" : "&c❌";
+        return bool ? "<green>✓" : "<red>❌";
     }
 }

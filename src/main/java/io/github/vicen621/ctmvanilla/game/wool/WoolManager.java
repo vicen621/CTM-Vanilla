@@ -4,6 +4,9 @@ import io.github.vicen621.ctmvanilla.Main;
 import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.game.GameManager;
 import lombok.Getter;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -16,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Getter
+@SuppressWarnings("unused")
 public class WoolManager {
 
     private final Main plugin;
@@ -80,8 +84,22 @@ public class WoolManager {
 
         StringUtils.broadcast("", "&6" + wool.getName() + (wool.isMineral() ? "" : " wool") + " obtained in " + currentTime + ". Awesome!");
 
+        MiniMessage mm = MiniMessage.miniMessage();
+
+        Title title = Title.title(
+                mm.deserialize(
+                        "<white><bold><name><item>",
+                        Placeholder.unparsed("name", wool.getName()),
+                        Placeholder.unparsed("item", wool.isMineral() ? "" : " item")
+                ),
+                mm.deserialize(
+                        "<gold>Obtained by <player>",
+                        Placeholder.unparsed("player", player.getName())
+                )
+        );
+
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendTitle(StringUtils.chat("&f&l" + wool.getName() + (wool.isMineral() ? "" : " item")), StringUtils.chat("&6Obtained by " + player.getName()));
+            p.showTitle(title);
             p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 2);
         }
 

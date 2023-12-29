@@ -75,7 +75,9 @@ public class Wool {
         };
     }
 
+
     @UtilityClass
+    @SuppressWarnings("unused")
     public static class Minerals {
         private final Wool COAL_BLOCK = new Wool(Material.COAL_BLOCK, "Block of Coal", true);
         private final Wool COPPER_BLOCK = new Wool(Material.COPPER_BLOCK, "Block of Copper", true);

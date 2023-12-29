@@ -6,6 +6,8 @@ import io.github.vicen621.ctmvanilla.Utils.Utils;
 import io.github.vicen621.ctmvanilla.game.timer.TimerManager;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.title.Title;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +23,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@SuppressWarnings("deprecation")
 public class GameManager {
+
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final Main plugin;
 
@@ -33,6 +38,7 @@ public class GameManager {
     private boolean uhc;
     private boolean minerals;
     private boolean rewards;
+    private int deaths;
 
     public GameManager(Main plugin) {
         this.plugin = plugin;
@@ -46,7 +52,7 @@ public class GameManager {
     }
 
     public void startGame(GameMode gameMode) {
-        StringUtils.broadcast("The game has started. Game mode: &b" + WordUtils.capitalizeFully(this.gameMode.name()));
+        StringUtils.broadcast("The game has started. Game mode: <aqua>" + WordUtils.capitalizeFully(this.gameMode.name()));
         setGameMode(gameMode);
         this.timer = new TimerManager(plugin, this.getGameMode().time);
         this.timer.startTimer();
@@ -85,19 +91,23 @@ public class GameManager {
         plugin.getWoolManager().registerWools(gameMode, isMinerals());
     }
 
+    public void incrementDeaths() {
+        this.deaths++;
+    }
+
     public void toggleMinerals() {
         setMinerals(!isMinerals());
-        StringUtils.broadcast("Minerals Mode has been " + (plugin.getGameManager().isMinerals() ? "&aenabled" : "&cdisabled"));
+        StringUtils.broadcast("Minerals Mode has been " + (plugin.getGameManager().isMinerals() ? "<green>enabled" : "<red>disabled"));
     }
 
     public void toggleUHC() {
         setUhc(!isUhc());
-        StringUtils.broadcast("UHC Mode has been " + (plugin.getGameManager().isUhc() ? "&aenabled" : "&cdisabled"));
+        StringUtils.broadcast("UHC Mode has been " + (plugin.getGameManager().isUhc() ? "<green>enabled" : "<red>disabled"));
     }
 
     public void toggleRewards() {
         setRewards(!isRewards());
-        StringUtils.broadcast("Rewards Mode has been " + (plugin.getGameManager().isRewards() ? "&aenabled" : "&cdisabled"));
+        StringUtils.broadcast("Rewards Mode has been " + (plugin.getGameManager().isRewards() ? "<green>enabled" : "<red>disabled"));
     }
 
     public boolean isPlaying(OfflinePlayer p) {
@@ -107,16 +117,27 @@ public class GameManager {
     public void lose() {
         setGameState(GameState.LOSE);
 
+        Title title = Title.title(
+                MINI_MESSAGE.deserialize("<red><bold>PERDIERON"),
+                MINI_MESSAGE.deserialize("<red>Excedieron el tiempo limite")
+        );
+
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendTitle(StringUtils.chat("&4&lPERDIERON"), StringUtils.chat("&cExcedieron el tiempo limite"));
+            p.showTitle(title);
             p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_DEATH, 10.0F, 1.0F);
         }
     }
 
     public void won() {
         setGameState(GameState.WON);
+
+        Title title = Title.title(
+                MINI_MESSAGE.deserialize("<gold>VICTORY"),
+                MINI_MESSAGE.deserialize("<white>Congratulations everyone")
+        );
+
         for (Player p : Bukkit.getOnlinePlayers())
-            p.sendTitle(StringUtils.chat("&6VICTORY!"), StringUtils.chat("&fCongratulations everyone"));
+            p.showTitle(title);
 
         new BukkitRunnable() {
             int i = 0;

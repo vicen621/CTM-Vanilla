@@ -1,5 +1,7 @@
 package io.github.vicen621.ctmvanilla.Utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -11,12 +13,14 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
-import org.bukkit.util.Consumer;
+import org.bukkit.potion.PotionType;
 
 import java.util.*;
+import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class ItemBuilder {
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     private final ItemMeta meta;
     private final ItemStack item;
 
@@ -38,18 +42,13 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder data(int data) {
-        return durability((short) data);
-    }
-
-    public ItemBuilder setUnbrekeable(boolean unbrekeable) {
-        this.meta.setUnbreakable(unbrekeable);
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
+        this.meta.setUnbreakable(unbreakable);
         return this;
     }
 
-    public ItemBuilder durability(short durability) {
-        this.item.setDurability(durability);
-        return this;
+    public ItemBuilder damage(int damage) {
+        return meta(Damageable.class, m -> m.setDamage(damage));
     }
 
     public ItemBuilder amount(int amount) {
@@ -89,12 +88,12 @@ public class ItemBuilder {
     }
 
     public ItemBuilder name(String name) {
-        this.meta.setDisplayName(StringUtils.chat(name));
+        this.meta.displayName(MINI_MESSAGE.deserialize(name));
         return this;
     }
 
     public ItemBuilder lore(String lore) {
-        return lore(Collections.singletonList(StringUtils.chat(lore)));
+        return lore(Collections.singletonList(lore));
     }
 
     public ItemBuilder lore(String... lore) {
@@ -102,21 +101,12 @@ public class ItemBuilder {
     }
 
     public ItemBuilder lore(List<String> lore) {
-        List<String> colorLore = new ArrayList<>();
-        for (String s : lore) colorLore.add(StringUtils.chat(s));
-        this.meta.setLore(colorLore);
+        this.meta.lore(lore.stream().map(MINI_MESSAGE::deserialize).toList());
         return this;
     }
 
     public ItemBuilder addLore(String line) {
-        List<String> lore = this.meta.getLore();
-
-        if (lore == null) {
-            return lore(StringUtils.chat(line));
-        }
-
-        lore.add(StringUtils.chat(line));
-        return lore(lore);
+        return addLore(Collections.singletonList(line));
     }
 
     public ItemBuilder addLore(String... lines) {
@@ -124,14 +114,15 @@ public class ItemBuilder {
     }
 
     public ItemBuilder addLore(List<String> lines) {
-        List<String> lore = this.meta.getLore();
+        List<Component> lore = this.meta.lore();
 
-        if (lore == null) {
+        if (lore == null || lore.isEmpty()) {
             return lore(lines);
         }
 
-        lore.addAll(lines);
-        return lore(lore);
+        lore.addAll(lines.stream().map(MINI_MESSAGE::deserialize).toList());
+        this.meta.lore(lore);
+        return this;
     }
 
     public ItemBuilder flags(ItemFlag... flags) {
@@ -144,8 +135,8 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder storeEnchant(Enchantment ench, int level, boolean lvlRestriction) {
-        return meta(EnchantmentStorageMeta.class, m -> m.addStoredEnchant(ench, level, lvlRestriction));
+    public ItemBuilder storeEnchant(Enchantment enchantment, int level, boolean lvlRestriction) {
+        return meta(EnchantmentStorageMeta.class, m -> m.addStoredEnchant(enchantment, level, lvlRestriction));
     }
 
     public ItemBuilder flags() {
@@ -173,11 +164,11 @@ public class ItemBuilder {
         return meta(SkullMeta.class, m -> m.setOwningPlayer(p));
     }
 
-    public ItemBuilder setBasePotionData(PotionData data) {
-        return meta(PotionMeta.class, m -> m.setBasePotionData(data));
+    public ItemBuilder setBasePotionType(PotionType potionType) {
+        return meta(PotionMeta.class, m -> m.setBasePotionType(potionType));
     }
 
-    public ItemBuilder addAtribute(Attribute attribute, AttributeModifier modifier) {
+    public ItemBuilder addAttribute(Attribute attribute, AttributeModifier modifier) {
         this.meta.addAttributeModifier(attribute, modifier);
         return this;
     }

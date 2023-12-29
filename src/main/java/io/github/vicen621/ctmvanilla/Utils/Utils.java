@@ -13,7 +13,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.Random;
@@ -32,27 +31,7 @@ public class Utils {
             Color.YELLOW
     };
 
-    public boolean isInt(String s) {
-        try {
-            Float.parseFloat(s);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
-    public static int getTotalDeaths() {
-        int deaths = 0;
-
-        for (UUID uuid : Main.getInstance().getGameManager().getPlaying()) {
-            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            deaths += p.getStatistic(Statistic.DEATHS);
-        }
-
-        return deaths;
-    }
-
-    public String environment(World world) {
+    public String getEnvironmentName(World world) {
         return switch (world.getEnvironment()) {
             case NORMAL -> "Overworld";
             case NETHER -> "Nether";
@@ -64,16 +43,6 @@ public class Utils {
     public Player getRandomPlayer() {
         List<UUID> players = Main.getInstance().getGameManager().getPlaying();
         return Bukkit.getPlayer(players.get(new Random().nextInt(players.size())));
-    }
-
-    public void run(Runnable run) {
-        new BukkitRunnable() {
-
-            @Override
-            public void run() {
-                run.run();
-            }
-        }.runTask(Main.getInstance());
     }
 
     public void spawnFirework() {
@@ -120,8 +89,8 @@ public class Utils {
 
                         pattern.set('M', IntelligentItem.of(
                                 new ItemBuilder(Material.DIAMOND_ORE)
-                                        .name("&7Minerals mode")
-                                        .lore(" &3» " + getBoolean(gameManager.isMinerals()))
+                                        .name("<gray>Minerals mode")
+                                        .lore(" <dark_aqua>» " + getBoolean(gameManager.isMinerals()))
                                         .build(),
                                 e -> {
                                     gameManager.toggleMinerals();
@@ -131,8 +100,8 @@ public class Utils {
 
                         pattern.set('U', IntelligentItem.of(
                                 new ItemBuilder(Material.GOLDEN_APPLE)
-                                        .name("&7UHC mode")
-                                        .lore(" &3» " + getBoolean(gameManager.isUhc()))
+                                        .name("<gray>UHC mode")
+                                        .lore(" <dark_aqua>» " + getBoolean(gameManager.isUhc()))
                                         .build(),
                                 e -> {
                                     gameManager.toggleUHC();
@@ -142,8 +111,8 @@ public class Utils {
 
                         pattern.set('R', IntelligentItem.of(
                                 new ItemBuilder(Material.CAKE)
-                                        .name("&7Rewards mode")
-                                        .lore(" &3» " + getBoolean(gameManager.isRewards()))
+                                        .name("<gray>Rewards mode")
+                                        .lore(" <dark_aqua>» " + getBoolean(gameManager.isRewards()))
                                         .build(),
                                 e -> {
                                     gameManager.toggleRewards();
@@ -161,9 +130,9 @@ public class Utils {
      * Get a Boolean and return a String
      *
      * @param bool boolean
-     * @return &bOn if is true, &cOff if is false
+     * @return <aqua>On if is true, <red>Off if is false
      */
     public String getBoolean(boolean bool) {
-        return bool ? "&bOn" : "&cOff";
+        return bool ? "<aqua>On" : "<red>Off";
     }
 }

@@ -2,42 +2,25 @@ package io.github.vicen621.ctmvanilla.Utils;
 
 import lombok.experimental.UtilityClass;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @UtilityClass
 public class StringUtils {
-    public static String PREFIX = "&#313535[&#0c768bCTM Vanilla&#313535] &#4b5061» &7";
-
-    public static String chat(String s) {
-        Pattern pattern = Pattern.compile("(#|&#)([A-Fa-f0-9]{6})");
-        s = s.replace("&k", "&r");
-        if (Integer.parseInt(Bukkit.getVersion().split("\\.")[1]) >= 16) {
-            Matcher match = pattern.matcher(s);
-            while (match.find()) {
-                String color = s.substring(match.start(), match.end());
-                s = s.replace(color, String.valueOf(net.md_5.bungee.api.ChatColor.of(color.replace("&#", "#"))));
-                match = pattern.matcher(s);
-            }
-        }
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
+    public static String PREFIX = "<#313535>[<#0c768b>CTM Vanilla<#313535>] <#4b5061>» <gray>";
 
     public void broadcast(String message) {
         broadcast(PREFIX, message);
     }
 
     public void broadcast(String prefix, String message) {
-        Bukkit.broadcastMessage(chat(prefix + message));
+        MiniMessage mm = MiniMessage.miniMessage();
+        Bukkit.broadcast(mm.deserialize(prefix).append(mm.deserialize(message)));
     }
 
     public void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(chat(PREFIX + message));
+        sender.sendRichMessage(PREFIX + message);
     }
 
     public String formatTime(int secs) {
@@ -59,9 +42,5 @@ public class StringUtils {
             return horr + ":" + minn + ":" + secc;
         else
             return minn + ":" + secc;
-    }
-
-    public String replacePlaceHolders(Player p, String s) {
-        return PlaceholderAPI.setPlaceholders(p, s);
     }
 }

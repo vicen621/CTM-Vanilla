@@ -1,11 +1,12 @@
 package io.github.vicen621.ctmvanilla.scoreboard;
 
-import fr.mrmicky.fastboard.FastBoard;
+import fr.mrmicky.fastboard.adventure.FastBoard;
 import io.github.vicen621.ctmvanilla.Main;
-import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.config.Config;
 import io.github.vicen621.ctmvanilla.game.GameManager;
 import lombok.experimental.UtilityClass;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -30,7 +31,15 @@ public class Scoreboard {
             case WON -> lines = config.getScoreboard().wonBoard();
         }
 
-        lines = lines.stream().map(line -> StringUtils.chat(StringUtils.replacePlaceHolders(p, line))).toList();
-        board.updateLines(lines);
+        board.updateLines(
+                lines.stream()
+                .map(line -> replacePlaceHolders(p, line))
+                .map(MiniMessage.miniMessage()::deserialize)
+                .toList()
+        );
+    }
+
+    public String replacePlaceHolders(Player p, String s) {
+        return PlaceholderAPI.setPlaceholders(p, s);
     }
 }

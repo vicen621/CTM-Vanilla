@@ -1,13 +1,15 @@
 package io.github.vicen621.ctmvanilla.listeners;
 
 import io.github.vicen621.ctmvanilla.Main;
-import io.github.vicen621.ctmvanilla.Utils.StringUtils;
 import io.github.vicen621.ctmvanilla.game.GameManager;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 
 /*
  * Copyright (c) 2021 Vicen621.
@@ -24,20 +26,24 @@ public class ChatListener implements Listener {
     }
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
+    public void onChat(AsyncChatEvent e) {
         Player p = e.getPlayer();
-        String msg = e.getMessage();
-
-        msg = msg.replace("%", "");
+        MiniMessage mm = MiniMessage.miniMessage();
 
         if (gameManager.getGameState() != GameManager.GameState.PLAYING) {
-            e.setFormat(StringUtils.chat("&7" + p.getDisplayName() + " &#4b5061» &f" + msg));
+            e.renderer((source, sourceDisplayName, msg, viewer) -> mm.deserialize(
+                    "<gray><sender> <#4b5061>» <white><msg>",
+                    Placeholder.component("sender", sourceDisplayName),
+                    Placeholder.component("msg", msg)
+            ));
             return;
         }
 
-        e.setFormat(StringUtils.chat("&#313535[" +
-                (gameManager.isPlaying(p) ? "&#0c768bPlayer" : "&#00f7ffSpectator") +
-                "&#313535] &7" + p.getDisplayName() + " &#4b5061» &f" + msg)
-        );
+        e.renderer((source, sourceDisplayName, msg, viewer) -> mm.deserialize(
+                "<#313535>[<prefix><#313535>] <gray><sender> <#4b5061>» <white><msg>",
+                Placeholder.parsed("prefix", gameManager.isPlaying(p) ? "<#0c768b>Player" : "<#00f7ff>Spectator"),
+                Placeholder.component("sender", sourceDisplayName),
+                Placeholder.component("msg", msg)
+        ));
     }
 }

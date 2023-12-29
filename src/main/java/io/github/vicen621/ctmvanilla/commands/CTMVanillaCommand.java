@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 @CommandAlias("ctm|ctmfv|ctmvanilla")
 public class CTMVanillaCommand extends BaseCommand {
 
@@ -38,23 +39,23 @@ public class CTMVanillaCommand extends BaseCommand {
     @Description("Shows the missing wools and minerals to won the game")
     public void onWools(CommandSender sender) {
         if (gameManager.getGameState() != GameManager.GameState.PLAYING) {
-            StringUtils.sendMessage(sender, "&cNo game running, please start the game to see the missing items");
+            StringUtils.sendMessage(sender, "<red>No game running, please start the game to see the missing items");
             return;
         }
 
         List<Wool> missingWools = woolManager.getWools().stream().filter(wool -> !wool.isTaken()).toList();
 
-        sender.sendMessage(StringUtils.chat("&5------------ &dMissing Items &5------------"));
+        sender.sendRichMessage("<dark_purple>------------ <light_purple>Missing Items <dark_purple>------------");
         for (Wool wool : missingWools)
-            sender.sendMessage(StringUtils.chat("&5- &d" + WordUtils.capitalizeFully(wool.getMaterial().toString().replace("_", " "))));
-        sender.sendMessage(StringUtils.chat("&5---------------------------------------"));
+            sender.sendRichMessage("<dark_purple>- <light_purple>" + WordUtils.capitalizeFully(wool.getMaterial().toString().replace("_", " ")));
+        sender.sendRichMessage("<dark_purple>---------------------------------------");
     }
 
     @Subcommand("reload")
     @CommandPermission("ctm.op")
     @Description("Reloads the configuration file")
     public void onReload(CommandSender sender) {
-        plugin.updateConfig();
+        plugin.getConfigManager().updateConfig();
         StringUtils.sendMessage(sender, "Reload complete");
     }
 
@@ -78,8 +79,8 @@ public class CTMVanillaCommand extends BaseCommand {
             return;
         }
 
-        String prefix = StringUtils.chat("&#313535[&bTL&#313535] &#4b5061» ");
-        String format = "&3&o{name}&8&o:&7X:&a{x} &7Y:&a{y} &7Z:&a{z} &8(&c{dimension}&8)";
+        String prefix = "<#313535>[<aqua>TL<#313535>] <#4b5061>» ";
+        String format = "<dark_aqua><italic>{name}<dark_gray><italic>:<gray>X:<green>{x} <gray>Y:<green>{y} <gray>Z:<green>{z} <dark_gray>(<red>{dimension}<dark_gray>)";
 
         Location loc = p.getLocation();
 
@@ -87,9 +88,9 @@ public class CTMVanillaCommand extends BaseCommand {
         format = format.replace("{x}", String.valueOf(loc.getBlockX()));
         format = format.replace("{y}", String.valueOf(loc.getBlockY()));
         format = format.replace("{z}", String.valueOf(loc.getBlockZ()));
-        format = format.replace("{dimension}", Utils.environment(p.getWorld()));
+        format = format.replace("{dimension}", Utils.getEnvironmentName(p.getWorld()));
 
-        StringUtils.broadcast(prefix, (message == null ? "" : "&f" + message + " &7| ") + format);
+        StringUtils.broadcast(prefix, (message == null ? "" : "<white>" + message + " <gray>| ") + format);
     }
 
     @Subcommand("reset")
@@ -134,7 +135,7 @@ public class CTMVanillaCommand extends BaseCommand {
         @Description("Set the game time to an specific second")
         public void onTimerSet(CommandSender sender, int seconds) {
             gameManager.getTimer().setTime(seconds);
-            StringUtils.broadcast("Timer set to &3" + StringUtils.formatTime(seconds));
+            StringUtils.broadcast("Timer set to <dark_aqua>" + StringUtils.formatTime(seconds));
         }
 
         @Subcommand("stop")
@@ -148,7 +149,7 @@ public class CTMVanillaCommand extends BaseCommand {
         @Description("Resumes the timer")
         public void onTimerResume(CommandSender sender) {
             gameManager.getTimer().startTimer();
-            StringUtils.broadcast("Timer resumed from &3" + gameManager.getTimer().getCurrentTimeFormatted());
+            StringUtils.broadcast("Timer resumed from <dark_aqua>" + gameManager.getTimer().getCurrentTimeFormatted());
         }
     }
 
