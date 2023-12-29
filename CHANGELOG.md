@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/vicen621/CTM-Vanilla/compare/v1.3.0...v1.3.1) (2023-12-29)
+
+
+### Bug Fixes
+
+* fixed minor bugs ([e9a7409](https://github.com/vicen621/CTM-Vanilla/commit/e9a7409b58f9a7e8e7bf99bb26b2fe38e71d4877))
+
 ## [1.3.0](https://github.com/vicen621/CTM-Vanilla/compare/v1.2.0...v1.3.0) (2023-12-29)
 
 
